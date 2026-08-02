@@ -3,9 +3,14 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "@/routeTree.gen";
 import "@/index.css";
-import { QueryProvider } from '@/providers/QueryProvider'
+import { QueryProvider } from "@/providers/QueryProvider";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { queryClient } from "@/lib/queryClient";
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+  routeTree,
+  context: { queryClient },
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -18,9 +23,11 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <QueryProvider>
-        <RouterProvider router={router} />
-      </QueryProvider>
+      <ErrorBoundary>
+        <QueryProvider>
+          <RouterProvider router={router} />
+        </QueryProvider>
+      </ErrorBoundary>
     </StrictMode>,
   );
 }
