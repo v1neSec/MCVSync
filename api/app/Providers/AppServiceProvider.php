@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +23,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Auth::provider('scoped-eloquent', function ($app, array $config) {
+            return (new EloquentUserProvider($app['hash'], $config['model']))
+                ->withQuery(fn ($query) => $query->where('type', $config['type']));
+        });
+
+        RateLimiter::for('login-staff', function ($request) {
+            return Limit::perMinute(10)->by($request->ip());
+        });
+
+        RateLimiter::for('login-client', function ($request) {
+            return Limit::perMinute(5)->by($request->ip());
+        });
     }
 }

@@ -42,6 +42,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'staff' => [
+            'driver' => 'session',
+            'provider' => 'staff',
+        ],
+
+        'client' => [
+            'driver' => 'session',
+            'provider' => 'client',
+        ],
     ],
 
     /*
@@ -71,6 +81,25 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        // The 'staff' and 'client' guards below share the users table but
+        // must never be able to authenticate a row of the other type. The
+        // 'scoped-eloquent' driver (registered in AppServiceProvider) scopes
+        // the provider's underlying query by `type` so a client-type row is
+        // structurally unable to be retrieved through the staff provider,
+        // and vice versa — the isolation lives in the query, not in a
+        // controller-level if-check layered on top of a shared lookup.
+        'staff' => [
+            'driver' => 'scoped-eloquent',
+            'model' => User::class,
+            'type' => 'staff',
+        ],
+
+        'client' => [
+            'driver' => 'scoped-eloquent',
+            'model' => User::class,
+            'type' => 'client',
+        ],
     ],
 
     /*
