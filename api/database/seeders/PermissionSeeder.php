@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
@@ -28,6 +28,6 @@ class PermissionSeeder extends Seeder
         collect(self::ROLE_PERMISSIONS)
             ->flatten()
             ->unique()
-            ->each(fn (string $name) => Permission::updateOrCreate(['name' => $name]));
+            ->each(fn (string $name) => Permission::updateOrCreate(['name' => $name, 'guard_name' => 'staff']));
     }
 }

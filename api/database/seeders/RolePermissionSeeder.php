@@ -2,23 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
-use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        $allPermissionNames = Permission::pluck('id', 'name');
-
         foreach (PermissionSeeder::ROLE_PERMISSIONS as $roleName => $permissionNames) {
-            $role = Role::where('name', $roleName)->firstOrFail();
-            $role->permissions()->sync($allPermissionNames->only($permissionNames)->values());
+            $role = Role::where('name', $roleName)->where('guard_name', 'staff')->firstOrFail();
+            $role->syncPermissions($permissionNames);
         }
 
         // Super Admin holds every permission in the system by default.
-        Role::where('name', 'super_admin')->firstOrFail()
-            ->permissions()->sync($allPermissionNames->values());
+        Role::where('name', 'super_admin')->where('guard_name', 'staff')->firstOrFail()
+            ->syncPermissions(Permission::where('guard_name', 'staff')->get());
     }
 }

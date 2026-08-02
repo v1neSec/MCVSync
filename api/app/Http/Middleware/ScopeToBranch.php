@@ -17,14 +17,11 @@ class ScopeToBranch
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $employee = Auth::guard('staff')->user()?->employee;
+        $user = Auth::guard('staff')->user();
+        $employee = $user?->employee;
 
-        if ($employee) {
-            $roleName = $employee->role()?->name;
-
-            if (! in_array($roleName, ['admin', 'super_admin'], true)) {
-                app()->instance('currentBranchId', $employee->branch_id);
-            }
+        if ($employee && ! $user->hasRole(['admin', 'super_admin'], 'staff')) {
+            app()->instance('currentBranchId', $employee->branch_id);
         }
 
         return $next($request);
