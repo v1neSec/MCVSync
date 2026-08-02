@@ -18,15 +18,15 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = $request->user('staff');
-        $employee = $user->employee()->with(['branch', 'roles.permissions'])->first();
+        $employee = $user->employee()->with('branch')->first();
 
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'role' => $employee?->role()?->name,
+            'role' => $user->getRoleNames()->first(),
             'branch' => $employee?->branch,
-            'permissions' => $employee?->permissionNames() ?? [],
+            'permissions' => $user->getAllPermissions()->pluck('name'),
         ]);
     }
 }

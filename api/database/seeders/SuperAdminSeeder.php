@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use App\Models\User;
 use App\Services\AccountProvisioningService;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class SuperAdminSeeder extends Seeder
 {
@@ -23,7 +23,10 @@ class SuperAdminSeeder extends Seeder
             'password' => config('services.super_admin.password'),
         ], branchId: null);
 
-        $role = Role::where('name', 'super_admin')->firstOrFail();
-        $employee->roles()->sync([$role->id]);
+        // Resolving an actual Role instance (rather than the bare string
+        // form of assignRole) sidesteps Spatie's default-guard detection,
+        // which is ambiguous for this model — see the note on User::class.
+        $role = Role::where('name', 'super_admin')->where('guard_name', 'staff')->firstOrFail();
+        $employee->user->assignRole($role);
     }
 }
