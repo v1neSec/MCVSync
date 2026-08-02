@@ -3,14 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'type', 'is_active'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -27,6 +29,36 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
+    }
+
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    public function client(): HasOne
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->type === 'staff';
+    }
+
+    public function isClient(): bool
+    {
+        return $this->type === 'client';
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $baseUrl = $this->isClient()
+            ? config('app.portal_url')
+            : config('app.frontend_url');
+
+        $this->notify(new ResetPasswordNotification($token, $baseUrl));
     }
 }

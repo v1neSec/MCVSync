@@ -1,5 +1,10 @@
 <?php
 
+use App\Models\Branch;
+use App\Models\Client;
+use App\Models\Employee;
+use App\Models\User;
+use App\Models\Zone;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,7 +20,7 @@ use Tests\TestCase;
 */
 
 pest()->extend(TestCase::class)
- // ->use(RefreshDatabase::class)
+    ->use(RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -44,7 +49,33 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function makeStaffUser(array $overrides = [], string $branchCode = 'APALIT'): User
 {
-    // ..
+    $branch = Branch::firstOrCreate(
+        ['code' => $branchCode],
+        ['name' => $branchCode, 'address' => 'Test address', 'is_main' => true]
+    );
+
+    $user = User::factory()->staff()->create($overrides);
+
+    Employee::create(['user_id' => $user->id, 'branch_id' => $branch->id]);
+
+    return $user->fresh();
+}
+
+function makeClientUser(array $overrides = [], string $zoneName = 'Pampanga/Bulacan'): User
+{
+    $zone = Zone::firstOrCreate(['name' => $zoneName]);
+
+    $user = User::factory()->client()->create($overrides);
+
+    Client::create([
+        'user_id' => $user->id,
+        'address' => 'Test address',
+        'contact' => '09171234567',
+        'zone_id' => $zone->id,
+        'client_type' => 'direct',
+    ]);
+
+    return $user->fresh();
 }
