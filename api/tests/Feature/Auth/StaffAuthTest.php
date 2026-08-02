@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\Employee;
-use App\Models\Permission;
-use App\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 test('staff can log in with correct credentials and only the staff guard is authenticated', function () {
     $user = makeStaffUser();
@@ -43,11 +42,10 @@ test('an inactive staff account is rejected at login even with correct credentia
 
 test('me returns the role, branch, and permissions for the authenticated staff user', function () {
     $user = makeStaffUser();
-    $employee = Employee::where('user_id', $user->id)->first();
-    $role = Role::firstOrCreate(['name' => 'sales']);
-    $permission = Permission::firstOrCreate(['name' => 'cof.create']);
-    $role->permissions()->sync([$permission->id]);
-    $employee->roles()->sync([$role->id]);
+    $role = Role::firstOrCreate(['name' => 'sales', 'guard_name' => 'staff']);
+    $permission = Permission::firstOrCreate(['name' => 'cof.create', 'guard_name' => 'staff']);
+    $role->givePermissionTo($permission);
+    $user->assignRole($role);
 
     $this->actingAs($user, 'staff');
 
