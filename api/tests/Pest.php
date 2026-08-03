@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\User;
 use App\Models\Zone;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 /*
@@ -59,6 +60,15 @@ function makeStaffUser(array $overrides = [], string $branchCode = 'APALIT'): Us
     $user = User::factory()->staff()->create($overrides);
 
     Employee::create(['user_id' => $user->id, 'branch_id' => $branch->id]);
+
+    return $user->fresh();
+}
+
+function assignStaffRole(User $user, string $roleName): User
+{
+    $role = Role::firstOrCreate(['name' => $roleName, 'guard_name' => 'staff']);
+
+    $user->syncRoles([$role]);
 
     return $user->fresh();
 }
