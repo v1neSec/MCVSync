@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureActiveAccount;
+use App\Http\Middleware\EnsureHasRole;
 use App\Http\Middleware\ScopeToBranch;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'ensure-active-account' => EnsureActiveAccount::class,
             'scope-to-branch' => ScopeToBranch::class,
+            'has-role' => EnsureHasRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
