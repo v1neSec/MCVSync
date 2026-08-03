@@ -5,6 +5,10 @@ import { RouteErrorFallback } from "@/components/RouteErrorFallback";
 import { TableSkeleton } from "@/components/TableSkeleton";
 import { Button } from "@/components/ui/button";
 import {
+  Alert,
+  AlertDescription,
+} from "@/components/ui/alert";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -88,8 +92,13 @@ function RoleAssignmentRow({ employee }: { employee: Employee }) {
 
   function handleChange(value: string) {
     const nextRole = value as Role;
+    const previousRole = role;
+
     setRole(nextRole);
-    assignMutation.mutate({ employeeId: employee.id, role: nextRole });
+    assignMutation.mutate(
+      { employeeId: employee.id, role: nextRole },
+      { onError: () => setRole(previousRole) },
+    );
   }
 
   return (
@@ -97,22 +106,30 @@ function RoleAssignmentRow({ employee }: { employee: Employee }) {
       <TableCell>{employee.name}</TableCell>
       <TableCell>{employee.email}</TableCell>
       <TableCell>
-        <div className="flex items-center gap-2">
-          <Select value={role} onValueChange={(value) => value && handleChange(value)}>
-            <SelectTrigger className="w-40">
-              <SelectValue placeholder="No role" />
-            </SelectTrigger>
-            <SelectContent>
-              {ROLES.map((roleOption) => (
-                <SelectItem key={roleOption} value={roleOption}>
-                  {ROLE_LABELS[roleOption]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {assignMutation.isPending &&
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2">
+            <Select value={role} onValueChange={(value) => value && handleChange(value)}>
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder="No role" />
+              </SelectTrigger>
+              <SelectContent>
+                {ROLES.map((roleOption) => (
+                  <SelectItem key={roleOption} value={roleOption}>
+                    {ROLE_LABELS[roleOption]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {assignMutation.isPending &&
+              assignMutation.variables?.employeeId === employee.id && (
+                <span className="text-xs text-muted-foreground">Saving...</span>
+              )}
+          </div>
+          {assignMutation.isError &&
             assignMutation.variables?.employeeId === employee.id && (
-              <span className="text-xs text-muted-foreground">Saving...</span>
+              <Alert variant="destructive" className="py-1.5">
+                <AlertDescription>{getErrorMessage(assignMutation.error)}</AlertDescription>
+              </Alert>
             )}
         </div>
       </TableCell>
