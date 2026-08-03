@@ -14,6 +14,44 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedUnauthorizedRouteImport } from './routes/_authenticated/unauthorized'
+import { Route as AuthenticatedAccountingClientPricingRouteImport } from './routes/_authenticated/accounting/client-pricing'
+import { Route as AuthenticatedAccountingItemsRouteImport } from './routes/_authenticated/accounting/items'
+import { Route as AuthenticatedAccountingPaymentHistoryRouteImport } from './routes/_authenticated/accounting/payment-history'
+import { Route as AuthenticatedAccountingPendingPaymentsRouteImport } from './routes/_authenticated/accounting/pending-payments'
+import { Route as AuthenticatedAccountingPendingPricingRouteImport } from './routes/_authenticated/accounting/pending-pricing'
+import { Route as AuthenticatedAdminActivityLogRouteImport } from './routes/_authenticated/admin/activity-log'
+import { Route as AuthenticatedAdminBranchesRouteImport } from './routes/_authenticated/admin/branches'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedAdminClientAccountsRouteImport } from './routes/_authenticated/admin/client-accounts'
+import { Route as AuthenticatedAdminClientsRouteImport } from './routes/_authenticated/admin/clients'
+import { Route as AuthenticatedAdminRolePermissionsRouteImport } from './routes/_authenticated/admin/role-permissions'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
+import { Route as AuthenticatedAdminStaffRouteImport } from './routes/_authenticated/admin/staff'
+import { Route as AuthenticatedAdminSuppliersRouteImport } from './routes/_authenticated/admin/suppliers'
+import { Route as AuthenticatedAdminUnitsRouteImport } from './routes/_authenticated/admin/units'
+import { Route as AuthenticatedLogisticsDeliveryHistoryRouteImport } from './routes/_authenticated/logistics/delivery-history'
+import { Route as AuthenticatedLogisticsIncomingOrdersRouteImport } from './routes/_authenticated/logistics/incoming-orders'
+import { Route as AuthenticatedLogisticsReadyToDeliverRouteImport } from './routes/_authenticated/logistics/ready-to-deliver'
+import { Route as AuthenticatedPurchasingPurchaseOrdersRouteImport } from './routes/_authenticated/purchasing/purchase-orders'
+import { Route as AuthenticatedPurchasingStockReceivingRouteImport } from './routes/_authenticated/purchasing/stock-receiving'
+import { Route as AuthenticatedPurchasingSuppliersRouteImport } from './routes/_authenticated/purchasing/suppliers'
+import { Route as AuthenticatedSalesClientsRouteImport } from './routes/_authenticated/sales/clients'
+import { Route as AuthenticatedSalesClientsAnalyticsRouteImport } from './routes/_authenticated/sales/clients-analytics'
+import { Route as AuthenticatedSalesCofsRouteImport } from './routes/_authenticated/sales/cofs'
+import { Route as AuthenticatedSalesDiscountsRouteImport } from './routes/_authenticated/sales/discounts'
+import { Route as AuthenticatedSalesDispatchRouteImport } from './routes/_authenticated/sales/dispatch'
+import { Route as AuthenticatedSalesIntakeRouteImport } from './routes/_authenticated/sales/intake'
+import { Route as AuthenticatedSalesItemsRouteImport } from './routes/_authenticated/sales/items'
+import { Route as AuthenticatedSalesItemsExpiryRouteImport } from './routes/_authenticated/sales/items-expiry'
+import { Route as AuthenticatedSuperAdminBranchDashboardsRouteImport } from './routes/_authenticated/super-admin/branch-dashboards'
+import { Route as AuthenticatedSuperAdminBranchesRouteImport } from './routes/_authenticated/super-admin/branches'
+import { Route as AuthenticatedSuperAdminClientsRouteImport } from './routes/_authenticated/super-admin/clients'
+import { Route as AuthenticatedSuperAdminCompanyAnalyticsRouteImport } from './routes/_authenticated/super-admin/company-analytics'
+import { Route as AuthenticatedSuperAdminCompareBranchesRouteImport } from './routes/_authenticated/super-admin/compare-branches'
+import { Route as AuthenticatedSuperAdminPurchasesOverviewRouteImport } from './routes/_authenticated/super-admin/purchases-overview'
+import { Route as AuthenticatedSuperAdminRoleAssignmentRouteImport } from './routes/_authenticated/super-admin/role-assignment'
+import { Route as AuthenticatedSuperAdminSalesOverviewRouteImport } from './routes/_authenticated/super-admin/sales-overview'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -39,18 +77,318 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedUnauthorizedRoute =
+  AuthenticatedUnauthorizedRouteImport.update({
+    id: '/unauthorized',
+    path: '/unauthorized',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingClientPricingRoute =
+  AuthenticatedAccountingClientPricingRouteImport.update({
+    id: '/accounting/client-pricing',
+    path: '/accounting/client-pricing',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingItemsRoute =
+  AuthenticatedAccountingItemsRouteImport.update({
+    id: '/accounting/items',
+    path: '/accounting/items',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingPaymentHistoryRoute =
+  AuthenticatedAccountingPaymentHistoryRouteImport.update({
+    id: '/accounting/payment-history',
+    path: '/accounting/payment-history',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingPendingPaymentsRoute =
+  AuthenticatedAccountingPendingPaymentsRouteImport.update({
+    id: '/accounting/pending-payments',
+    path: '/accounting/pending-payments',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAccountingPendingPricingRoute =
+  AuthenticatedAccountingPendingPricingRouteImport.update({
+    id: '/accounting/pending-pricing',
+    path: '/accounting/pending-pricing',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminActivityLogRoute =
+  AuthenticatedAdminActivityLogRouteImport.update({
+    id: '/admin/activity-log',
+    path: '/admin/activity-log',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminBranchesRoute =
+  AuthenticatedAdminBranchesRouteImport.update({
+    id: '/admin/branches',
+    path: '/admin/branches',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/admin/categories',
+    path: '/admin/categories',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminClientAccountsRoute =
+  AuthenticatedAdminClientAccountsRouteImport.update({
+    id: '/admin/client-accounts',
+    path: '/admin/client-accounts',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminClientsRoute =
+  AuthenticatedAdminClientsRouteImport.update({
+    id: '/admin/clients',
+    path: '/admin/clients',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminRolePermissionsRoute =
+  AuthenticatedAdminRolePermissionsRouteImport.update({
+    id: '/admin/role-permissions',
+    path: '/admin/role-permissions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminStaffRoute = AuthenticatedAdminStaffRouteImport.update({
+  id: '/admin/staff',
+  path: '/admin/staff',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAdminSuppliersRoute =
+  AuthenticatedAdminSuppliersRouteImport.update({
+    id: '/admin/suppliers',
+    path: '/admin/suppliers',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminUnitsRoute = AuthenticatedAdminUnitsRouteImport.update({
+  id: '/admin/units',
+  path: '/admin/units',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedLogisticsDeliveryHistoryRoute =
+  AuthenticatedLogisticsDeliveryHistoryRouteImport.update({
+    id: '/logistics/delivery-history',
+    path: '/logistics/delivery-history',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedLogisticsIncomingOrdersRoute =
+  AuthenticatedLogisticsIncomingOrdersRouteImport.update({
+    id: '/logistics/incoming-orders',
+    path: '/logistics/incoming-orders',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedLogisticsReadyToDeliverRoute =
+  AuthenticatedLogisticsReadyToDeliverRouteImport.update({
+    id: '/logistics/ready-to-deliver',
+    path: '/logistics/ready-to-deliver',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPurchasingPurchaseOrdersRoute =
+  AuthenticatedPurchasingPurchaseOrdersRouteImport.update({
+    id: '/purchasing/purchase-orders',
+    path: '/purchasing/purchase-orders',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPurchasingStockReceivingRoute =
+  AuthenticatedPurchasingStockReceivingRouteImport.update({
+    id: '/purchasing/stock-receiving',
+    path: '/purchasing/stock-receiving',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPurchasingSuppliersRoute =
+  AuthenticatedPurchasingSuppliersRouteImport.update({
+    id: '/purchasing/suppliers',
+    path: '/purchasing/suppliers',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesClientsRoute =
+  AuthenticatedSalesClientsRouteImport.update({
+    id: '/sales/clients',
+    path: '/sales/clients',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesClientsAnalyticsRoute =
+  AuthenticatedSalesClientsAnalyticsRouteImport.update({
+    id: '/sales/clients-analytics',
+    path: '/sales/clients-analytics',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesCofsRoute = AuthenticatedSalesCofsRouteImport.update({
+  id: '/sales/cofs',
+  path: '/sales/cofs',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSalesDiscountsRoute =
+  AuthenticatedSalesDiscountsRouteImport.update({
+    id: '/sales/discounts',
+    path: '/sales/discounts',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesDispatchRoute =
+  AuthenticatedSalesDispatchRouteImport.update({
+    id: '/sales/dispatch',
+    path: '/sales/dispatch',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesIntakeRoute =
+  AuthenticatedSalesIntakeRouteImport.update({
+    id: '/sales/intake',
+    path: '/sales/intake',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSalesItemsRoute = AuthenticatedSalesItemsRouteImport.update({
+  id: '/sales/items',
+  path: '/sales/items',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedSalesItemsExpiryRoute =
+  AuthenticatedSalesItemsExpiryRouteImport.update({
+    id: '/sales/items-expiry',
+    path: '/sales/items-expiry',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminBranchDashboardsRoute =
+  AuthenticatedSuperAdminBranchDashboardsRouteImport.update({
+    id: '/super-admin/branch-dashboards',
+    path: '/super-admin/branch-dashboards',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminBranchesRoute =
+  AuthenticatedSuperAdminBranchesRouteImport.update({
+    id: '/super-admin/branches',
+    path: '/super-admin/branches',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminClientsRoute =
+  AuthenticatedSuperAdminClientsRouteImport.update({
+    id: '/super-admin/clients',
+    path: '/super-admin/clients',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminCompanyAnalyticsRoute =
+  AuthenticatedSuperAdminCompanyAnalyticsRouteImport.update({
+    id: '/super-admin/company-analytics',
+    path: '/super-admin/company-analytics',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminCompareBranchesRoute =
+  AuthenticatedSuperAdminCompareBranchesRouteImport.update({
+    id: '/super-admin/compare-branches',
+    path: '/super-admin/compare-branches',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminPurchasesOverviewRoute =
+  AuthenticatedSuperAdminPurchasesOverviewRouteImport.update({
+    id: '/super-admin/purchases-overview',
+    path: '/super-admin/purchases-overview',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminRoleAssignmentRoute =
+  AuthenticatedSuperAdminRoleAssignmentRouteImport.update({
+    id: '/super-admin/role-assignment',
+    path: '/super-admin/role-assignment',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSuperAdminSalesOverviewRoute =
+  AuthenticatedSuperAdminSalesOverviewRouteImport.update({
+    id: '/super-admin/sales-overview',
+    path: '/super-admin/sales-overview',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/accounting/client-pricing': typeof AuthenticatedAccountingClientPricingRoute
+  '/accounting/items': typeof AuthenticatedAccountingItemsRoute
+  '/accounting/payment-history': typeof AuthenticatedAccountingPaymentHistoryRoute
+  '/accounting/pending-payments': typeof AuthenticatedAccountingPendingPaymentsRoute
+  '/accounting/pending-pricing': typeof AuthenticatedAccountingPendingPricingRoute
+  '/admin/activity-log': typeof AuthenticatedAdminActivityLogRoute
+  '/admin/branches': typeof AuthenticatedAdminBranchesRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/client-accounts': typeof AuthenticatedAdminClientAccountsRoute
+  '/admin/clients': typeof AuthenticatedAdminClientsRoute
+  '/admin/role-permissions': typeof AuthenticatedAdminRolePermissionsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/staff': typeof AuthenticatedAdminStaffRoute
+  '/admin/suppliers': typeof AuthenticatedAdminSuppliersRoute
+  '/admin/units': typeof AuthenticatedAdminUnitsRoute
+  '/logistics/delivery-history': typeof AuthenticatedLogisticsDeliveryHistoryRoute
+  '/logistics/incoming-orders': typeof AuthenticatedLogisticsIncomingOrdersRoute
+  '/logistics/ready-to-deliver': typeof AuthenticatedLogisticsReadyToDeliverRoute
+  '/purchasing/purchase-orders': typeof AuthenticatedPurchasingPurchaseOrdersRoute
+  '/purchasing/stock-receiving': typeof AuthenticatedPurchasingStockReceivingRoute
+  '/purchasing/suppliers': typeof AuthenticatedPurchasingSuppliersRoute
+  '/sales/clients': typeof AuthenticatedSalesClientsRoute
+  '/sales/clients-analytics': typeof AuthenticatedSalesClientsAnalyticsRoute
+  '/sales/cofs': typeof AuthenticatedSalesCofsRoute
+  '/sales/discounts': typeof AuthenticatedSalesDiscountsRoute
+  '/sales/dispatch': typeof AuthenticatedSalesDispatchRoute
+  '/sales/intake': typeof AuthenticatedSalesIntakeRoute
+  '/sales/items': typeof AuthenticatedSalesItemsRoute
+  '/sales/items-expiry': typeof AuthenticatedSalesItemsExpiryRoute
+  '/super-admin/branch-dashboards': typeof AuthenticatedSuperAdminBranchDashboardsRoute
+  '/super-admin/branches': typeof AuthenticatedSuperAdminBranchesRoute
+  '/super-admin/clients': typeof AuthenticatedSuperAdminClientsRoute
+  '/super-admin/company-analytics': typeof AuthenticatedSuperAdminCompanyAnalyticsRoute
+  '/super-admin/compare-branches': typeof AuthenticatedSuperAdminCompareBranchesRoute
+  '/super-admin/purchases-overview': typeof AuthenticatedSuperAdminPurchasesOverviewRoute
+  '/super-admin/role-assignment': typeof AuthenticatedSuperAdminRoleAssignmentRoute
+  '/super-admin/sales-overview': typeof AuthenticatedSuperAdminSalesOverviewRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/unauthorized': typeof AuthenticatedUnauthorizedRoute
   '/': typeof AuthenticatedIndexRoute
+  '/accounting/client-pricing': typeof AuthenticatedAccountingClientPricingRoute
+  '/accounting/items': typeof AuthenticatedAccountingItemsRoute
+  '/accounting/payment-history': typeof AuthenticatedAccountingPaymentHistoryRoute
+  '/accounting/pending-payments': typeof AuthenticatedAccountingPendingPaymentsRoute
+  '/accounting/pending-pricing': typeof AuthenticatedAccountingPendingPricingRoute
+  '/admin/activity-log': typeof AuthenticatedAdminActivityLogRoute
+  '/admin/branches': typeof AuthenticatedAdminBranchesRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/client-accounts': typeof AuthenticatedAdminClientAccountsRoute
+  '/admin/clients': typeof AuthenticatedAdminClientsRoute
+  '/admin/role-permissions': typeof AuthenticatedAdminRolePermissionsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/staff': typeof AuthenticatedAdminStaffRoute
+  '/admin/suppliers': typeof AuthenticatedAdminSuppliersRoute
+  '/admin/units': typeof AuthenticatedAdminUnitsRoute
+  '/logistics/delivery-history': typeof AuthenticatedLogisticsDeliveryHistoryRoute
+  '/logistics/incoming-orders': typeof AuthenticatedLogisticsIncomingOrdersRoute
+  '/logistics/ready-to-deliver': typeof AuthenticatedLogisticsReadyToDeliverRoute
+  '/purchasing/purchase-orders': typeof AuthenticatedPurchasingPurchaseOrdersRoute
+  '/purchasing/stock-receiving': typeof AuthenticatedPurchasingStockReceivingRoute
+  '/purchasing/suppliers': typeof AuthenticatedPurchasingSuppliersRoute
+  '/sales/clients': typeof AuthenticatedSalesClientsRoute
+  '/sales/clients-analytics': typeof AuthenticatedSalesClientsAnalyticsRoute
+  '/sales/cofs': typeof AuthenticatedSalesCofsRoute
+  '/sales/discounts': typeof AuthenticatedSalesDiscountsRoute
+  '/sales/dispatch': typeof AuthenticatedSalesDispatchRoute
+  '/sales/intake': typeof AuthenticatedSalesIntakeRoute
+  '/sales/items': typeof AuthenticatedSalesItemsRoute
+  '/sales/items-expiry': typeof AuthenticatedSalesItemsExpiryRoute
+  '/super-admin/branch-dashboards': typeof AuthenticatedSuperAdminBranchDashboardsRoute
+  '/super-admin/branches': typeof AuthenticatedSuperAdminBranchesRoute
+  '/super-admin/clients': typeof AuthenticatedSuperAdminClientsRoute
+  '/super-admin/company-analytics': typeof AuthenticatedSuperAdminCompanyAnalyticsRoute
+  '/super-admin/compare-branches': typeof AuthenticatedSuperAdminCompareBranchesRoute
+  '/super-admin/purchases-overview': typeof AuthenticatedSuperAdminPurchasesOverviewRoute
+  '/super-admin/role-assignment': typeof AuthenticatedSuperAdminRoleAssignmentRoute
+  '/super-admin/sales-overview': typeof AuthenticatedSuperAdminSalesOverviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -58,20 +396,180 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/unauthorized': typeof AuthenticatedUnauthorizedRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/accounting/client-pricing': typeof AuthenticatedAccountingClientPricingRoute
+  '/_authenticated/accounting/items': typeof AuthenticatedAccountingItemsRoute
+  '/_authenticated/accounting/payment-history': typeof AuthenticatedAccountingPaymentHistoryRoute
+  '/_authenticated/accounting/pending-payments': typeof AuthenticatedAccountingPendingPaymentsRoute
+  '/_authenticated/accounting/pending-pricing': typeof AuthenticatedAccountingPendingPricingRoute
+  '/_authenticated/admin/activity-log': typeof AuthenticatedAdminActivityLogRoute
+  '/_authenticated/admin/branches': typeof AuthenticatedAdminBranchesRoute
+  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin/client-accounts': typeof AuthenticatedAdminClientAccountsRoute
+  '/_authenticated/admin/clients': typeof AuthenticatedAdminClientsRoute
+  '/_authenticated/admin/role-permissions': typeof AuthenticatedAdminRolePermissionsRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/staff': typeof AuthenticatedAdminStaffRoute
+  '/_authenticated/admin/suppliers': typeof AuthenticatedAdminSuppliersRoute
+  '/_authenticated/admin/units': typeof AuthenticatedAdminUnitsRoute
+  '/_authenticated/logistics/delivery-history': typeof AuthenticatedLogisticsDeliveryHistoryRoute
+  '/_authenticated/logistics/incoming-orders': typeof AuthenticatedLogisticsIncomingOrdersRoute
+  '/_authenticated/logistics/ready-to-deliver': typeof AuthenticatedLogisticsReadyToDeliverRoute
+  '/_authenticated/purchasing/purchase-orders': typeof AuthenticatedPurchasingPurchaseOrdersRoute
+  '/_authenticated/purchasing/stock-receiving': typeof AuthenticatedPurchasingStockReceivingRoute
+  '/_authenticated/purchasing/suppliers': typeof AuthenticatedPurchasingSuppliersRoute
+  '/_authenticated/sales/clients': typeof AuthenticatedSalesClientsRoute
+  '/_authenticated/sales/clients-analytics': typeof AuthenticatedSalesClientsAnalyticsRoute
+  '/_authenticated/sales/cofs': typeof AuthenticatedSalesCofsRoute
+  '/_authenticated/sales/discounts': typeof AuthenticatedSalesDiscountsRoute
+  '/_authenticated/sales/dispatch': typeof AuthenticatedSalesDispatchRoute
+  '/_authenticated/sales/intake': typeof AuthenticatedSalesIntakeRoute
+  '/_authenticated/sales/items': typeof AuthenticatedSalesItemsRoute
+  '/_authenticated/sales/items-expiry': typeof AuthenticatedSalesItemsExpiryRoute
+  '/_authenticated/super-admin/branch-dashboards': typeof AuthenticatedSuperAdminBranchDashboardsRoute
+  '/_authenticated/super-admin/branches': typeof AuthenticatedSuperAdminBranchesRoute
+  '/_authenticated/super-admin/clients': typeof AuthenticatedSuperAdminClientsRoute
+  '/_authenticated/super-admin/company-analytics': typeof AuthenticatedSuperAdminCompanyAnalyticsRoute
+  '/_authenticated/super-admin/compare-branches': typeof AuthenticatedSuperAdminCompareBranchesRoute
+  '/_authenticated/super-admin/purchases-overview': typeof AuthenticatedSuperAdminPurchasesOverviewRoute
+  '/_authenticated/super-admin/role-assignment': typeof AuthenticatedSuperAdminRoleAssignmentRoute
+  '/_authenticated/super-admin/sales-overview': typeof AuthenticatedSuperAdminSalesOverviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/forgot-password' | '/login' | '/reset-password'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
+    | '/unauthorized'
+    | '/accounting/client-pricing'
+    | '/accounting/items'
+    | '/accounting/payment-history'
+    | '/accounting/pending-payments'
+    | '/accounting/pending-pricing'
+    | '/admin/activity-log'
+    | '/admin/branches'
+    | '/admin/categories'
+    | '/admin/client-accounts'
+    | '/admin/clients'
+    | '/admin/role-permissions'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin/suppliers'
+    | '/admin/units'
+    | '/logistics/delivery-history'
+    | '/logistics/incoming-orders'
+    | '/logistics/ready-to-deliver'
+    | '/purchasing/purchase-orders'
+    | '/purchasing/stock-receiving'
+    | '/purchasing/suppliers'
+    | '/sales/clients'
+    | '/sales/clients-analytics'
+    | '/sales/cofs'
+    | '/sales/discounts'
+    | '/sales/dispatch'
+    | '/sales/intake'
+    | '/sales/items'
+    | '/sales/items-expiry'
+    | '/super-admin/branch-dashboards'
+    | '/super-admin/branches'
+    | '/super-admin/clients'
+    | '/super-admin/company-analytics'
+    | '/super-admin/compare-branches'
+    | '/super-admin/purchases-overview'
+    | '/super-admin/role-assignment'
+    | '/super-admin/sales-overview'
   fileRoutesByTo: FileRoutesByTo
-  to: '/forgot-password' | '/login' | '/reset-password' | '/'
+  to:
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
+    | '/unauthorized'
+    | '/'
+    | '/accounting/client-pricing'
+    | '/accounting/items'
+    | '/accounting/payment-history'
+    | '/accounting/pending-payments'
+    | '/accounting/pending-pricing'
+    | '/admin/activity-log'
+    | '/admin/branches'
+    | '/admin/categories'
+    | '/admin/client-accounts'
+    | '/admin/clients'
+    | '/admin/role-permissions'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin/suppliers'
+    | '/admin/units'
+    | '/logistics/delivery-history'
+    | '/logistics/incoming-orders'
+    | '/logistics/ready-to-deliver'
+    | '/purchasing/purchase-orders'
+    | '/purchasing/stock-receiving'
+    | '/purchasing/suppliers'
+    | '/sales/clients'
+    | '/sales/clients-analytics'
+    | '/sales/cofs'
+    | '/sales/discounts'
+    | '/sales/dispatch'
+    | '/sales/intake'
+    | '/sales/items'
+    | '/sales/items-expiry'
+    | '/super-admin/branch-dashboards'
+    | '/super-admin/branches'
+    | '/super-admin/clients'
+    | '/super-admin/company-analytics'
+    | '/super-admin/compare-branches'
+    | '/super-admin/purchases-overview'
+    | '/super-admin/role-assignment'
+    | '/super-admin/sales-overview'
   id:
     | '__root__'
     | '/_authenticated'
     | '/forgot-password'
     | '/login'
     | '/reset-password'
+    | '/_authenticated/unauthorized'
     | '/_authenticated/'
+    | '/_authenticated/accounting/client-pricing'
+    | '/_authenticated/accounting/items'
+    | '/_authenticated/accounting/payment-history'
+    | '/_authenticated/accounting/pending-payments'
+    | '/_authenticated/accounting/pending-pricing'
+    | '/_authenticated/admin/activity-log'
+    | '/_authenticated/admin/branches'
+    | '/_authenticated/admin/categories'
+    | '/_authenticated/admin/client-accounts'
+    | '/_authenticated/admin/clients'
+    | '/_authenticated/admin/role-permissions'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/staff'
+    | '/_authenticated/admin/suppliers'
+    | '/_authenticated/admin/units'
+    | '/_authenticated/logistics/delivery-history'
+    | '/_authenticated/logistics/incoming-orders'
+    | '/_authenticated/logistics/ready-to-deliver'
+    | '/_authenticated/purchasing/purchase-orders'
+    | '/_authenticated/purchasing/stock-receiving'
+    | '/_authenticated/purchasing/suppliers'
+    | '/_authenticated/sales/clients'
+    | '/_authenticated/sales/clients-analytics'
+    | '/_authenticated/sales/cofs'
+    | '/_authenticated/sales/discounts'
+    | '/_authenticated/sales/dispatch'
+    | '/_authenticated/sales/intake'
+    | '/_authenticated/sales/items'
+    | '/_authenticated/sales/items-expiry'
+    | '/_authenticated/super-admin/branch-dashboards'
+    | '/_authenticated/super-admin/branches'
+    | '/_authenticated/super-admin/clients'
+    | '/_authenticated/super-admin/company-analytics'
+    | '/_authenticated/super-admin/compare-branches'
+    | '/_authenticated/super-admin/purchases-overview'
+    | '/_authenticated/super-admin/role-assignment'
+    | '/_authenticated/super-admin/sales-overview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -118,15 +616,374 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/unauthorized': {
+      id: '/_authenticated/unauthorized'
+      path: '/unauthorized'
+      fullPath: '/unauthorized'
+      preLoaderRoute: typeof AuthenticatedUnauthorizedRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/client-pricing': {
+      id: '/_authenticated/accounting/client-pricing'
+      path: '/accounting/client-pricing'
+      fullPath: '/accounting/client-pricing'
+      preLoaderRoute: typeof AuthenticatedAccountingClientPricingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/items': {
+      id: '/_authenticated/accounting/items'
+      path: '/accounting/items'
+      fullPath: '/accounting/items'
+      preLoaderRoute: typeof AuthenticatedAccountingItemsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/payment-history': {
+      id: '/_authenticated/accounting/payment-history'
+      path: '/accounting/payment-history'
+      fullPath: '/accounting/payment-history'
+      preLoaderRoute: typeof AuthenticatedAccountingPaymentHistoryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/pending-payments': {
+      id: '/_authenticated/accounting/pending-payments'
+      path: '/accounting/pending-payments'
+      fullPath: '/accounting/pending-payments'
+      preLoaderRoute: typeof AuthenticatedAccountingPendingPaymentsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/accounting/pending-pricing': {
+      id: '/_authenticated/accounting/pending-pricing'
+      path: '/accounting/pending-pricing'
+      fullPath: '/accounting/pending-pricing'
+      preLoaderRoute: typeof AuthenticatedAccountingPendingPricingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/activity-log': {
+      id: '/_authenticated/admin/activity-log'
+      path: '/admin/activity-log'
+      fullPath: '/admin/activity-log'
+      preLoaderRoute: typeof AuthenticatedAdminActivityLogRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/branches': {
+      id: '/_authenticated/admin/branches'
+      path: '/admin/branches'
+      fullPath: '/admin/branches'
+      preLoaderRoute: typeof AuthenticatedAdminBranchesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/categories': {
+      id: '/_authenticated/admin/categories'
+      path: '/admin/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/client-accounts': {
+      id: '/_authenticated/admin/client-accounts'
+      path: '/admin/client-accounts'
+      fullPath: '/admin/client-accounts'
+      preLoaderRoute: typeof AuthenticatedAdminClientAccountsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/clients': {
+      id: '/_authenticated/admin/clients'
+      path: '/admin/clients'
+      fullPath: '/admin/clients'
+      preLoaderRoute: typeof AuthenticatedAdminClientsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/role-permissions': {
+      id: '/_authenticated/admin/role-permissions'
+      path: '/admin/role-permissions'
+      fullPath: '/admin/role-permissions'
+      preLoaderRoute: typeof AuthenticatedAdminRolePermissionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/staff': {
+      id: '/_authenticated/admin/staff'
+      path: '/admin/staff'
+      fullPath: '/admin/staff'
+      preLoaderRoute: typeof AuthenticatedAdminStaffRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/suppliers': {
+      id: '/_authenticated/admin/suppliers'
+      path: '/admin/suppliers'
+      fullPath: '/admin/suppliers'
+      preLoaderRoute: typeof AuthenticatedAdminSuppliersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin/units': {
+      id: '/_authenticated/admin/units'
+      path: '/admin/units'
+      fullPath: '/admin/units'
+      preLoaderRoute: typeof AuthenticatedAdminUnitsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/logistics/delivery-history': {
+      id: '/_authenticated/logistics/delivery-history'
+      path: '/logistics/delivery-history'
+      fullPath: '/logistics/delivery-history'
+      preLoaderRoute: typeof AuthenticatedLogisticsDeliveryHistoryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/logistics/incoming-orders': {
+      id: '/_authenticated/logistics/incoming-orders'
+      path: '/logistics/incoming-orders'
+      fullPath: '/logistics/incoming-orders'
+      preLoaderRoute: typeof AuthenticatedLogisticsIncomingOrdersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/logistics/ready-to-deliver': {
+      id: '/_authenticated/logistics/ready-to-deliver'
+      path: '/logistics/ready-to-deliver'
+      fullPath: '/logistics/ready-to-deliver'
+      preLoaderRoute: typeof AuthenticatedLogisticsReadyToDeliverRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/purchasing/purchase-orders': {
+      id: '/_authenticated/purchasing/purchase-orders'
+      path: '/purchasing/purchase-orders'
+      fullPath: '/purchasing/purchase-orders'
+      preLoaderRoute: typeof AuthenticatedPurchasingPurchaseOrdersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/purchasing/stock-receiving': {
+      id: '/_authenticated/purchasing/stock-receiving'
+      path: '/purchasing/stock-receiving'
+      fullPath: '/purchasing/stock-receiving'
+      preLoaderRoute: typeof AuthenticatedPurchasingStockReceivingRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/purchasing/suppliers': {
+      id: '/_authenticated/purchasing/suppliers'
+      path: '/purchasing/suppliers'
+      fullPath: '/purchasing/suppliers'
+      preLoaderRoute: typeof AuthenticatedPurchasingSuppliersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/clients': {
+      id: '/_authenticated/sales/clients'
+      path: '/sales/clients'
+      fullPath: '/sales/clients'
+      preLoaderRoute: typeof AuthenticatedSalesClientsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/clients-analytics': {
+      id: '/_authenticated/sales/clients-analytics'
+      path: '/sales/clients-analytics'
+      fullPath: '/sales/clients-analytics'
+      preLoaderRoute: typeof AuthenticatedSalesClientsAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/cofs': {
+      id: '/_authenticated/sales/cofs'
+      path: '/sales/cofs'
+      fullPath: '/sales/cofs'
+      preLoaderRoute: typeof AuthenticatedSalesCofsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/discounts': {
+      id: '/_authenticated/sales/discounts'
+      path: '/sales/discounts'
+      fullPath: '/sales/discounts'
+      preLoaderRoute: typeof AuthenticatedSalesDiscountsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/dispatch': {
+      id: '/_authenticated/sales/dispatch'
+      path: '/sales/dispatch'
+      fullPath: '/sales/dispatch'
+      preLoaderRoute: typeof AuthenticatedSalesDispatchRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/intake': {
+      id: '/_authenticated/sales/intake'
+      path: '/sales/intake'
+      fullPath: '/sales/intake'
+      preLoaderRoute: typeof AuthenticatedSalesIntakeRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/items': {
+      id: '/_authenticated/sales/items'
+      path: '/sales/items'
+      fullPath: '/sales/items'
+      preLoaderRoute: typeof AuthenticatedSalesItemsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/sales/items-expiry': {
+      id: '/_authenticated/sales/items-expiry'
+      path: '/sales/items-expiry'
+      fullPath: '/sales/items-expiry'
+      preLoaderRoute: typeof AuthenticatedSalesItemsExpiryRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/branch-dashboards': {
+      id: '/_authenticated/super-admin/branch-dashboards'
+      path: '/super-admin/branch-dashboards'
+      fullPath: '/super-admin/branch-dashboards'
+      preLoaderRoute: typeof AuthenticatedSuperAdminBranchDashboardsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/branches': {
+      id: '/_authenticated/super-admin/branches'
+      path: '/super-admin/branches'
+      fullPath: '/super-admin/branches'
+      preLoaderRoute: typeof AuthenticatedSuperAdminBranchesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/clients': {
+      id: '/_authenticated/super-admin/clients'
+      path: '/super-admin/clients'
+      fullPath: '/super-admin/clients'
+      preLoaderRoute: typeof AuthenticatedSuperAdminClientsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/company-analytics': {
+      id: '/_authenticated/super-admin/company-analytics'
+      path: '/super-admin/company-analytics'
+      fullPath: '/super-admin/company-analytics'
+      preLoaderRoute: typeof AuthenticatedSuperAdminCompanyAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/compare-branches': {
+      id: '/_authenticated/super-admin/compare-branches'
+      path: '/super-admin/compare-branches'
+      fullPath: '/super-admin/compare-branches'
+      preLoaderRoute: typeof AuthenticatedSuperAdminCompareBranchesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/purchases-overview': {
+      id: '/_authenticated/super-admin/purchases-overview'
+      path: '/super-admin/purchases-overview'
+      fullPath: '/super-admin/purchases-overview'
+      preLoaderRoute: typeof AuthenticatedSuperAdminPurchasesOverviewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/role-assignment': {
+      id: '/_authenticated/super-admin/role-assignment'
+      path: '/super-admin/role-assignment'
+      fullPath: '/super-admin/role-assignment'
+      preLoaderRoute: typeof AuthenticatedSuperAdminRoleAssignmentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/super-admin/sales-overview': {
+      id: '/_authenticated/super-admin/sales-overview'
+      path: '/super-admin/sales-overview'
+      fullPath: '/super-admin/sales-overview'
+      preLoaderRoute: typeof AuthenticatedSuperAdminSalesOverviewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedUnauthorizedRoute: typeof AuthenticatedUnauthorizedRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedAccountingClientPricingRoute: typeof AuthenticatedAccountingClientPricingRoute
+  AuthenticatedAccountingItemsRoute: typeof AuthenticatedAccountingItemsRoute
+  AuthenticatedAccountingPaymentHistoryRoute: typeof AuthenticatedAccountingPaymentHistoryRoute
+  AuthenticatedAccountingPendingPaymentsRoute: typeof AuthenticatedAccountingPendingPaymentsRoute
+  AuthenticatedAccountingPendingPricingRoute: typeof AuthenticatedAccountingPendingPricingRoute
+  AuthenticatedAdminActivityLogRoute: typeof AuthenticatedAdminActivityLogRoute
+  AuthenticatedAdminBranchesRoute: typeof AuthenticatedAdminBranchesRoute
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminClientAccountsRoute: typeof AuthenticatedAdminClientAccountsRoute
+  AuthenticatedAdminClientsRoute: typeof AuthenticatedAdminClientsRoute
+  AuthenticatedAdminRolePermissionsRoute: typeof AuthenticatedAdminRolePermissionsRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminStaffRoute: typeof AuthenticatedAdminStaffRoute
+  AuthenticatedAdminSuppliersRoute: typeof AuthenticatedAdminSuppliersRoute
+  AuthenticatedAdminUnitsRoute: typeof AuthenticatedAdminUnitsRoute
+  AuthenticatedLogisticsDeliveryHistoryRoute: typeof AuthenticatedLogisticsDeliveryHistoryRoute
+  AuthenticatedLogisticsIncomingOrdersRoute: typeof AuthenticatedLogisticsIncomingOrdersRoute
+  AuthenticatedLogisticsReadyToDeliverRoute: typeof AuthenticatedLogisticsReadyToDeliverRoute
+  AuthenticatedPurchasingPurchaseOrdersRoute: typeof AuthenticatedPurchasingPurchaseOrdersRoute
+  AuthenticatedPurchasingStockReceivingRoute: typeof AuthenticatedPurchasingStockReceivingRoute
+  AuthenticatedPurchasingSuppliersRoute: typeof AuthenticatedPurchasingSuppliersRoute
+  AuthenticatedSalesClientsRoute: typeof AuthenticatedSalesClientsRoute
+  AuthenticatedSalesClientsAnalyticsRoute: typeof AuthenticatedSalesClientsAnalyticsRoute
+  AuthenticatedSalesCofsRoute: typeof AuthenticatedSalesCofsRoute
+  AuthenticatedSalesDiscountsRoute: typeof AuthenticatedSalesDiscountsRoute
+  AuthenticatedSalesDispatchRoute: typeof AuthenticatedSalesDispatchRoute
+  AuthenticatedSalesIntakeRoute: typeof AuthenticatedSalesIntakeRoute
+  AuthenticatedSalesItemsRoute: typeof AuthenticatedSalesItemsRoute
+  AuthenticatedSalesItemsExpiryRoute: typeof AuthenticatedSalesItemsExpiryRoute
+  AuthenticatedSuperAdminBranchDashboardsRoute: typeof AuthenticatedSuperAdminBranchDashboardsRoute
+  AuthenticatedSuperAdminBranchesRoute: typeof AuthenticatedSuperAdminBranchesRoute
+  AuthenticatedSuperAdminClientsRoute: typeof AuthenticatedSuperAdminClientsRoute
+  AuthenticatedSuperAdminCompanyAnalyticsRoute: typeof AuthenticatedSuperAdminCompanyAnalyticsRoute
+  AuthenticatedSuperAdminCompareBranchesRoute: typeof AuthenticatedSuperAdminCompareBranchesRoute
+  AuthenticatedSuperAdminPurchasesOverviewRoute: typeof AuthenticatedSuperAdminPurchasesOverviewRoute
+  AuthenticatedSuperAdminRoleAssignmentRoute: typeof AuthenticatedSuperAdminRoleAssignmentRoute
+  AuthenticatedSuperAdminSalesOverviewRoute: typeof AuthenticatedSuperAdminSalesOverviewRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedUnauthorizedRoute: AuthenticatedUnauthorizedRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAccountingClientPricingRoute:
+    AuthenticatedAccountingClientPricingRoute,
+  AuthenticatedAccountingItemsRoute: AuthenticatedAccountingItemsRoute,
+  AuthenticatedAccountingPaymentHistoryRoute:
+    AuthenticatedAccountingPaymentHistoryRoute,
+  AuthenticatedAccountingPendingPaymentsRoute:
+    AuthenticatedAccountingPendingPaymentsRoute,
+  AuthenticatedAccountingPendingPricingRoute:
+    AuthenticatedAccountingPendingPricingRoute,
+  AuthenticatedAdminActivityLogRoute: AuthenticatedAdminActivityLogRoute,
+  AuthenticatedAdminBranchesRoute: AuthenticatedAdminBranchesRoute,
+  AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+  AuthenticatedAdminClientAccountsRoute: AuthenticatedAdminClientAccountsRoute,
+  AuthenticatedAdminClientsRoute: AuthenticatedAdminClientsRoute,
+  AuthenticatedAdminRolePermissionsRoute:
+    AuthenticatedAdminRolePermissionsRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminStaffRoute: AuthenticatedAdminStaffRoute,
+  AuthenticatedAdminSuppliersRoute: AuthenticatedAdminSuppliersRoute,
+  AuthenticatedAdminUnitsRoute: AuthenticatedAdminUnitsRoute,
+  AuthenticatedLogisticsDeliveryHistoryRoute:
+    AuthenticatedLogisticsDeliveryHistoryRoute,
+  AuthenticatedLogisticsIncomingOrdersRoute:
+    AuthenticatedLogisticsIncomingOrdersRoute,
+  AuthenticatedLogisticsReadyToDeliverRoute:
+    AuthenticatedLogisticsReadyToDeliverRoute,
+  AuthenticatedPurchasingPurchaseOrdersRoute:
+    AuthenticatedPurchasingPurchaseOrdersRoute,
+  AuthenticatedPurchasingStockReceivingRoute:
+    AuthenticatedPurchasingStockReceivingRoute,
+  AuthenticatedPurchasingSuppliersRoute: AuthenticatedPurchasingSuppliersRoute,
+  AuthenticatedSalesClientsRoute: AuthenticatedSalesClientsRoute,
+  AuthenticatedSalesClientsAnalyticsRoute:
+    AuthenticatedSalesClientsAnalyticsRoute,
+  AuthenticatedSalesCofsRoute: AuthenticatedSalesCofsRoute,
+  AuthenticatedSalesDiscountsRoute: AuthenticatedSalesDiscountsRoute,
+  AuthenticatedSalesDispatchRoute: AuthenticatedSalesDispatchRoute,
+  AuthenticatedSalesIntakeRoute: AuthenticatedSalesIntakeRoute,
+  AuthenticatedSalesItemsRoute: AuthenticatedSalesItemsRoute,
+  AuthenticatedSalesItemsExpiryRoute: AuthenticatedSalesItemsExpiryRoute,
+  AuthenticatedSuperAdminBranchDashboardsRoute:
+    AuthenticatedSuperAdminBranchDashboardsRoute,
+  AuthenticatedSuperAdminBranchesRoute: AuthenticatedSuperAdminBranchesRoute,
+  AuthenticatedSuperAdminClientsRoute: AuthenticatedSuperAdminClientsRoute,
+  AuthenticatedSuperAdminCompanyAnalyticsRoute:
+    AuthenticatedSuperAdminCompanyAnalyticsRoute,
+  AuthenticatedSuperAdminCompareBranchesRoute:
+    AuthenticatedSuperAdminCompareBranchesRoute,
+  AuthenticatedSuperAdminPurchasesOverviewRoute:
+    AuthenticatedSuperAdminPurchasesOverviewRoute,
+  AuthenticatedSuperAdminRoleAssignmentRoute:
+    AuthenticatedSuperAdminRoleAssignmentRoute,
+  AuthenticatedSuperAdminSalesOverviewRoute:
+    AuthenticatedSuperAdminSalesOverviewRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
