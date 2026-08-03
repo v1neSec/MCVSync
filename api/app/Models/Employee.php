@@ -21,4 +21,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function roleName(): ?string
+    {
+        return $this->user->getRoleNames()->first();
+    }
 }

@@ -3,7 +3,11 @@
 use App\Http\Controllers\Portal\AuthController as PortalAuthController;
 use App\Http\Controllers\Portal\PasswordResetController as PortalPasswordResetController;
 use App\Http\Controllers\Staff\AuthController as StaffAuthController;
+use App\Http\Controllers\Staff\BranchController;
+use App\Http\Controllers\Staff\EmployeeController;
 use App\Http\Controllers\Staff\PasswordResetController as StaffPasswordResetController;
+use App\Http\Controllers\Staff\PermissionController;
+use App\Http\Controllers\Staff\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('staff/auth')->group(function () {
@@ -14,6 +18,25 @@ Route::prefix('staff/auth')->group(function () {
     Route::middleware(['auth:staff', 'ensure-active-account'])->group(function () {
         Route::post('/logout', [StaffAuthController::class, 'logout']);
         Route::get('/me', [StaffAuthController::class, 'me']);
+    });
+});
+
+Route::prefix('staff')->middleware(['auth:staff', 'ensure-active-account'])->group(function () {
+    Route::get('/branches', [BranchController::class, 'index']);
+
+    Route::middleware('has-role:admin,super_admin')->group(function () {
+        Route::get('/employees', [EmployeeController::class, 'index']);
+        Route::post('/employees', [EmployeeController::class, 'store']);
+        Route::patch('/employees/{employee}', [EmployeeController::class, 'update']);
+        Route::post('/employees/{employee}/deactivate', [EmployeeController::class, 'deactivate']);
+        Route::post('/employees/{employee}/activate', [EmployeeController::class, 'activate']);
+        Route::get('/roles', [RoleController::class, 'index']);
+        Route::get('/permissions', [PermissionController::class, 'index']);
+        Route::put('/roles/{role:name}/permissions', [RoleController::class, 'updatePermissions']);
+    });
+
+    Route::middleware('has-role:super_admin')->group(function () {
+        Route::put('/employees/{employee}/role', [EmployeeController::class, 'assignRole']);
     });
 });
 

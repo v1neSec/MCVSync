@@ -6,6 +6,9 @@ import "@/index.css";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { queryClient } from "@/lib/queryClient";
+import { registerServiceWorker } from "@/pwa/registerServiceWorker";
+
+registerServiceWorker();
 
 const router = createRouter({
   routeTree,
