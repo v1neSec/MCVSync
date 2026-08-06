@@ -48,7 +48,7 @@ function RoleAssignmentPage() {
         </p>
       </div>
 
-      {employeesQuery.isPending && <TableSkeleton rows={6} columns={3} />}
+      {employeesQuery.isPending && <TableSkeleton rows={6} columns={4} />}
 
       {employeesQuery.isError && (
         <EmptyState
@@ -72,6 +72,7 @@ function RoleAssignmentPage() {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
+              <TableHead>Position</TableHead>
               <TableHead>Role</TableHead>
             </TableRow>
           </TableHeader>
@@ -105,6 +106,7 @@ function RoleAssignmentRow({ employee }: { employee: Employee }) {
     <TableRow>
       <TableCell>{employee.name}</TableCell>
       <TableCell>{employee.email}</TableCell>
+      <TableCell>{employee.position}</TableCell>
       <TableCell>
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center gap-2">

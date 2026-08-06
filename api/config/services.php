@@ -41,4 +41,6 @@ return [
         'password' => env('SUPER_ADMIN_PASSWORD'),
     ],
 
+    'seed_user_password' => env('SEED_USER_PASSWORD'),
+
 ];

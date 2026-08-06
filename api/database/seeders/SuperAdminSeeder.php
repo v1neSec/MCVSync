@@ -21,7 +21,7 @@ class SuperAdminSeeder extends Seeder
             'name' => config('services.super_admin.name'),
             'email' => $email,
             'password' => config('services.super_admin.password'),
-        ], branchId: null);
+        ], branchId: null, position: 'Chief Executive Officer');
 
         // Resolving an actual Role instance (rather than the bare string
         // form of assignRole) sidesteps Spatie's default-guard detection,

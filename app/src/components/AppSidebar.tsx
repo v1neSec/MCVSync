@@ -17,6 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { NAVIGATION, findActiveKeys, type NavItem } from "@/config/navigation";
 import { useMotionTransition } from "@/lib/motion";
@@ -44,13 +45,18 @@ export function AppSidebar({ role, badges = {} }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-1.5">
-          <div className="flex size-7 shrink-0 items-center justify-center bg-primary text-sm font-semibold text-primary-foreground">
-            M
+        <div className="flex items-center justify-between gap-2 px-2 py-1.5">
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex size-7 shrink-0 items-center justify-center bg-primary text-sm font-semibold text-primary-foreground">
+              M
+            </div>
+            <span className="truncate text-sm font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
+              MCVSync
+            </span>
           </div>
-          <span className="text-sm font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
-            MCVSync
-          </span>
+          <div className="hidden shrink-0 md:block">
+            <SidebarTrigger className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden" />
+          </div>
         </div>
       </SidebarHeader>
 
@@ -107,8 +113,8 @@ function NavEntry({ item, pathname, badges, expanded, onToggle, transition }: Na
           tooltip={item.label}
           render={<Link to={item.to ?? "/"} />}
         >
-          <item.icon />
-          <span>{item.label}</span>
+          <item.icon className="size-4 shrink-0" />
+          <span className="min-w-0 truncate">{item.label}</span>
         </SidebarMenuButton>
         {!!badgeCount && <SidebarMenuBadge>{badgeCount}</SidebarMenuBadge>}
       </SidebarMenuItem>
@@ -118,10 +124,13 @@ function NavEntry({ item, pathname, badges, expanded, onToggle, transition }: Na
   return (
     <SidebarMenuItem>
       <SidebarMenuButton onClick={onToggle} tooltip={item.label}>
-        <item.icon />
-        <span>{item.label}</span>
+        <item.icon className="size-4 shrink-0" />
+        <span className="min-w-0 truncate">{item.label}</span>
         <ChevronRight
-          className={cn("ml-auto transition-transform duration-200", expanded && "rotate-90")}
+          className={cn(
+            "ml-auto size-4 shrink-0 transition-transform duration-200",
+            expanded && "rotate-90",
+          )}
         />
       </SidebarMenuButton>
 
@@ -144,7 +153,7 @@ function NavEntry({ item, pathname, badges, expanded, onToggle, transition }: Na
                       isActive={child.to === pathname}
                       render={<Link to={child.to ?? "/"} />}
                     >
-                      <span>{child.label}</span>
+                      <span className="min-w-0 truncate">{child.label}</span>
                     </SidebarMenuSubButton>
                     {!!childBadge && <SidebarMenuBadge>{childBadge}</SidebarMenuBadge>}
                   </SidebarMenuSubItem>

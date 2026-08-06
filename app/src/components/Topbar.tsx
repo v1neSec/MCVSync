@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { ChevronDown, LogOut } from "lucide-react";
+import { Bell, ChevronDown, LogOut, Settings } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -51,22 +51,26 @@ export function Topbar() {
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background px-4">
-      <SidebarTrigger />
+      <SidebarTrigger className="md:hidden" />
 
-      <div className="flex flex-1 items-center gap-2">
-        {actingAs ? (
-          <div className="flex items-center gap-2 bg-primary/10 px-3 py-1 text-sm text-primary">
-            <span>Viewing as {ROLE_LABELS[actingAs]}</span>
-            <Button variant="ghost" size="xs" onClick={handleReturn}>
-              Return to Super Admin
-            </Button>
-          </div>
-        ) : (
-          <span className="text-sm text-muted-foreground">
-            {user.branch?.name ?? "All Branches"}
-          </span>
-        )}
+      <div className="min-w-0 flex-1">
+        <span className="truncate text-sm font-semibold text-foreground">
+          {effectiveRole ? `${ROLE_LABELS[effectiveRole]} Workspace` : "Workspace"}
+        </span>
       </div>
+
+      {actingAs ? (
+        <div className="flex items-center gap-2 bg-primary/10 px-3 py-1 text-sm text-primary">
+          <span>Viewing as {ROLE_LABELS[actingAs]}</span>
+          <Button variant="ghost" size="xs" onClick={handleReturn}>
+            Return to Super Admin
+          </Button>
+        </div>
+      ) : (
+        user.branch && (
+          <span className="text-sm text-muted-foreground">{user.branch.name}</span>
+        )
+      )}
 
       {!actingAs && user.role === "super_admin" && (
         <DropdownMenu>
@@ -86,6 +90,11 @@ export function Topbar() {
         </DropdownMenu>
       )}
 
+      <Button variant="ghost" size="icon-sm">
+        <Bell />
+        <span className="sr-only">Notifications</span>
+      </Button>
+
       <DropdownMenu>
         <DropdownMenuTrigger
           render={<button type="button" className="flex items-center gap-2" />}
@@ -95,9 +104,7 @@ export function Topbar() {
           </Avatar>
           <span className="hidden text-left sm:block">
             <span className="block text-sm leading-none font-medium">{user.name}</span>
-            <span className="block text-xs text-muted-foreground">
-              {effectiveRole ? ROLE_LABELS[effectiveRole] : ""}
-            </span>
+            <span className="block text-xs text-muted-foreground">{user.position ?? ""}</span>
           </span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -107,6 +114,11 @@ export function Topbar() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Button variant="ghost" size="icon-sm">
+        <Settings />
+        <span className="sr-only">Settings</span>
+      </Button>
     </header>
   );
 }

@@ -75,7 +75,7 @@ function StaffAccountsPage() {
         </Button>
       </div>
 
-      {employeesQuery.isPending && <TableSkeleton rows={6} columns={5} />}
+      {employeesQuery.isPending && <TableSkeleton rows={6} columns={6} />}
 
       {employeesQuery.isError && (
         <EmptyState
@@ -102,6 +102,7 @@ function StaffAccountsPage() {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
+              <TableHead>Position</TableHead>
               <TableHead>Branch</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
@@ -112,6 +113,7 @@ function StaffAccountsPage() {
               <TableRow key={employee.id}>
                 <TableCell>{employee.name}</TableCell>
                 <TableCell>{employee.email}</TableCell>
+                <TableCell>{employee.position}</TableCell>
                 <TableCell>{employee.branch?.name ?? "—"}</TableCell>
                 <TableCell>
                   <Badge variant={employee.is_active ? "default" : "outline"}>
@@ -180,6 +182,7 @@ function EmployeeFormDialog({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [position, setPosition] = useState("");
   const [branchId, setBranchId] = useState<string>("");
 
   useEffect(() => {
@@ -187,11 +190,13 @@ function EmployeeFormDialog({
       setName(state.name);
       setEmail(state.email);
       setPassword("");
+      setPosition(state.position);
       setBranchId(state.branch ? String(state.branch.id) : "");
     } else if (state === "new") {
       setName("");
       setEmail("");
       setPassword("");
+      setPosition("");
       setBranchId("");
     }
   }, [state, isEdit]);
@@ -205,12 +210,12 @@ function EmployeeFormDialog({
 
     if (isEdit) {
       updateMutation.mutate(
-        { id: state.id, payload: { name, email, branch_id: parsedBranchId } },
+        { id: state.id, payload: { name, email, position, branch_id: parsedBranchId } },
         { onSuccess: onClose },
       );
     } else {
       createMutation.mutate(
-        { name, email, password, branch_id: parsedBranchId },
+        { name, email, password, position, branch_id: parsedBranchId },
         { onSuccess: onClose },
       );
     }
@@ -252,6 +257,17 @@ function EmployeeFormDialog({
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="employee-position">Position</Label>
+            <Input
+              id="employee-position"
+              required
+              placeholder="e.g. Purchasing Manager"
+              value={position}
+              onChange={(event) => setPosition(event.target.value)}
             />
           </div>
 

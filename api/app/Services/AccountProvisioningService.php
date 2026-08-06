@@ -14,14 +14,15 @@ class AccountProvisioningService
      * creation in one transaction is what keeps `users.type` always matching
      * which extension table actually has a row for it.
      */
-    public function createStaff(array $userData, ?int $branchId): Employee
+    public function createStaff(array $userData, ?int $branchId, string $position): Employee
     {
-        return DB::transaction(function () use ($userData, $branchId) {
+        return DB::transaction(function () use ($userData, $branchId, $position) {
             $user = User::create([...$userData, 'type' => 'staff']);
 
             return Employee::create([
                 'user_id' => $user->id,
                 'branch_id' => $branchId,
+                'position' => $position,
             ]);
         });
     }

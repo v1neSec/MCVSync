@@ -14,6 +14,7 @@ class EmployeeResource extends JsonResource
             'name' => $this->user->name,
             'email' => $this->user->email,
             'is_active' => $this->user->is_active,
+            'position' => $this->position,
             'branch' => $this->branch ? new BranchResource($this->branch) : null,
             'role' => $this->roleName(),
         ];

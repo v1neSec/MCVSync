@@ -50,7 +50,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function makeStaffUser(array $overrides = [], string $branchCode = 'APALIT'): User
+function makeStaffUser(array $overrides = [], string $branchCode = 'APALIT', string $position = 'Staff'): User
 {
     $branch = Branch::firstOrCreate(
         ['code' => $branchCode],
@@ -59,7 +59,7 @@ function makeStaffUser(array $overrides = [], string $branchCode = 'APALIT'): Us
 
     $user = User::factory()->staff()->create($overrides);
 
-    Employee::create(['user_id' => $user->id, 'branch_id' => $branch->id]);
+    Employee::create(['user_id' => $user->id, 'branch_id' => $branch->id, 'position' => $position]);
 
     return $user->fresh();
 }

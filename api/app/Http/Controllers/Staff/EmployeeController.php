@@ -29,7 +29,7 @@ class EmployeeController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-        ], branchId: $data['branch_id'] ?? null);
+        ], branchId: $data['branch_id'] ?? null, position: $data['position']);
 
         return (new EmployeeResource($employee->fresh(['user.roles', 'branch'])))
             ->response()
@@ -42,7 +42,7 @@ class EmployeeController extends Controller
 
         $data = $request->validated();
 
-        $employee->update(['branch_id' => $data['branch_id'] ?? null]);
+        $employee->update(['branch_id' => $data['branch_id'] ?? null, 'position' => $data['position']]);
         $employee->user->update([
             'name' => $data['name'],
             'email' => $data['email'],
