@@ -43,11 +43,13 @@ test('admin can create a staff account with no role assigned', function () {
         'email' => 'new.hire@mcvsync.test',
         'password' => 'password123',
         'branch_id' => $branch->id,
+        'position' => 'Sales Associate',
     ]);
 
     $response->assertCreated();
     $response->assertJsonPath('name', 'New Hire');
     $response->assertJsonPath('role', null);
+    $response->assertJsonPath('position', 'Sales Associate');
     $this->assertDatabaseHas('users', ['email' => 'new.hire@mcvsync.test', 'type' => 'staff']);
 });
 
@@ -61,6 +63,7 @@ test('creating an employee rejects an email already used by a client', function 
         'email' => $client->email,
         'password' => 'password123',
         'branch_id' => Branch::first()->id,
+        'position' => 'Sales Associate',
     ]);
 
     $response->assertUnprocessable();
@@ -76,6 +79,7 @@ test('attempting to smuggle a role through the create payload is rejected', func
         'email' => 'sneaky@mcvsync.test',
         'password' => 'password123',
         'branch_id' => Branch::first()->id,
+        'position' => 'Sales Associate',
         'role' => 'super_admin',
     ]);
 
@@ -96,11 +100,13 @@ test('admin can update a staff account', function () {
         'name' => 'Updated Name',
         'email' => $target->email,
         'branch_id' => $newBranch->id,
+        'position' => 'Senior Sales Associate',
     ]);
 
     $response->assertOk();
     $response->assertJsonPath('name', 'Updated Name');
     $response->assertJsonPath('branch.code', 'CEBU');
+    $response->assertJsonPath('position', 'Senior Sales Associate');
 });
 
 test('admin cannot edit an employee whose current role is admin or super admin', function () {
@@ -115,6 +121,7 @@ test('admin cannot edit an employee whose current role is admin or super admin',
         'name' => 'Hijacked',
         'email' => $otherAdmin->email,
         'branch_id' => null,
+        'position' => 'System Administrator',
     ]);
 
     $response->assertForbidden();
@@ -132,6 +139,7 @@ test('super admin can edit an employee whose current role is admin', function ()
         'name' => 'Renamed Admin',
         'email' => $admin->email,
         'branch_id' => null,
+        'position' => 'System Administrator',
     ]);
 
     $response->assertOk();
