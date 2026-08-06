@@ -17,6 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { NAVIGATION, findActiveKeys, type NavItem } from "@/config/navigation";
 import { useMotionTransition } from "@/lib/motion";
@@ -44,13 +45,18 @@ export function AppSidebar({ role, badges = {} }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-1.5">
-          <div className="flex size-7 shrink-0 items-center justify-center bg-primary text-sm font-semibold text-primary-foreground">
-            M
+        <div className="flex items-center justify-between gap-2 px-2 py-1.5">
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex size-7 shrink-0 items-center justify-center bg-primary text-sm font-semibold text-primary-foreground">
+              M
+            </div>
+            <span className="truncate text-sm font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
+              MCVSync
+            </span>
           </div>
-          <span className="text-sm font-semibold text-sidebar-foreground group-data-[collapsible=icon]:hidden">
-            MCVSync
-          </span>
+          <div className="hidden shrink-0 md:block">
+            <SidebarTrigger className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden" />
+          </div>
         </div>
       </SidebarHeader>
 
