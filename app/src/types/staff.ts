@@ -5,6 +5,7 @@ export interface Employee {
   name: string;
   email: string;
   is_active: boolean;
+  position: string;
   branch: Branch | null;
   role: Role | null;
 }

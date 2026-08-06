@@ -37,6 +37,7 @@ export interface User {
   name: string;
   email: string;
   role: Role | null;
+  position: string | null;
   branch: Branch | null;
   permissions: string[];
 }

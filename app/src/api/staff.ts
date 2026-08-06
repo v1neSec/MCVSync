@@ -17,6 +17,7 @@ export interface CreateEmployeePayload {
   email: string;
   password: string;
   branch_id: number | null;
+  position: string;
 }
 
 export async function createEmployee(payload: CreateEmployeePayload): Promise<Employee> {
@@ -28,6 +29,7 @@ export interface UpdateEmployeePayload {
   name: string;
   email: string;
   branch_id: number | null;
+  position: string;
 }
 
 export async function updateEmployee(
