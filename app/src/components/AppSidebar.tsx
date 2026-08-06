@@ -107,8 +107,8 @@ function NavEntry({ item, pathname, badges, expanded, onToggle, transition }: Na
           tooltip={item.label}
           render={<Link to={item.to ?? "/"} />}
         >
-          <item.icon />
-          <span>{item.label}</span>
+          <item.icon className="size-4 shrink-0" />
+          <span className="min-w-0 truncate">{item.label}</span>
         </SidebarMenuButton>
         {!!badgeCount && <SidebarMenuBadge>{badgeCount}</SidebarMenuBadge>}
       </SidebarMenuItem>
@@ -118,10 +118,13 @@ function NavEntry({ item, pathname, badges, expanded, onToggle, transition }: Na
   return (
     <SidebarMenuItem>
       <SidebarMenuButton onClick={onToggle} tooltip={item.label}>
-        <item.icon />
-        <span>{item.label}</span>
+        <item.icon className="size-4 shrink-0" />
+        <span className="min-w-0 truncate">{item.label}</span>
         <ChevronRight
-          className={cn("ml-auto transition-transform duration-200", expanded && "rotate-90")}
+          className={cn(
+            "ml-auto size-4 shrink-0 transition-transform duration-200",
+            expanded && "rotate-90",
+          )}
         />
       </SidebarMenuButton>
 
@@ -144,7 +147,7 @@ function NavEntry({ item, pathname, badges, expanded, onToggle, transition }: Na
                       isActive={child.to === pathname}
                       render={<Link to={child.to ?? "/"} />}
                     >
-                      <span>{child.label}</span>
+                      <span className="min-w-0 truncate">{child.label}</span>
                     </SidebarMenuSubButton>
                     {!!childBadge && <SidebarMenuBadge>{childBadge}</SidebarMenuBadge>}
                   </SidebarMenuSubItem>
