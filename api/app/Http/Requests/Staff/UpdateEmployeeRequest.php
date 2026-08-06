@@ -15,6 +15,7 @@ class UpdateEmployeeRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($employee->user_id)],
             'branch_id' => ['nullable', 'integer', 'exists:branches,id'],
+            'position' => ['required', 'string', 'max:255'],
             'role' => ['prohibited'],
         ];
     }

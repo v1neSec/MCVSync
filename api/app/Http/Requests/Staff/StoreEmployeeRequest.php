@@ -14,6 +14,7 @@ class StoreEmployeeRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', Password::min(8)],
             'branch_id' => ['nullable', 'integer', 'exists:branches,id'],
+            'position' => ['required', 'string', 'max:255'],
             'role' => ['prohibited'],
         ];
     }
