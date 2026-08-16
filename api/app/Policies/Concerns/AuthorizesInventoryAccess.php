@@ -9,6 +9,11 @@ use App\Models\User;
  * Admin can reconfigure through the dynamic role_permission screen — so
  * this checks role membership directly rather than a permission name.
  * Shared by every inventory policy so the split is defined exactly once.
+ *
+ * Purchasing, Admin, and Super Admin get identical full read/write access;
+ * Sales, Accounting, and Logistics are blocked entirely. Every ability
+ * delegates to the same check since there is no longer a read/write split
+ * within the allowed roles.
  */
 trait AuthorizesInventoryAccess
 {
@@ -24,16 +29,16 @@ trait AuthorizesInventoryAccess
 
     public function create(User $user): bool
     {
-        return $user->hasRole(['purchasing', 'super_admin'], 'staff');
+        return $this->viewAny($user);
     }
 
     public function update(User $user): bool
     {
-        return $this->create($user);
+        return $this->viewAny($user);
     }
 
     public function delete(User $user): bool
     {
-        return $this->create($user);
+        return $this->viewAny($user);
     }
 }
