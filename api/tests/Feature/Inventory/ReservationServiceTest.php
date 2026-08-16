@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\LowStockThresholdCrossed;
+use App\Events\StockLevelChanged;
 use App\Exceptions\InsufficientStockException;
 use App\Models\Batch;
 use App\Models\Branch;
@@ -7,6 +9,7 @@ use App\Models\Item;
 use App\Models\StockReservation;
 use App\Services\ReservationService;
 use App\Services\StockAvailabilityService;
+use Illuminate\Support\Facades\Event;
 
 test('reserving stock creates an active reservation and reduces availability', function () {
     $branch = Branch::factory()->create();
@@ -77,4 +80,81 @@ test('a second reservation correctly accounts for a prior committed one against 
     app(ReservationService::class)->reserve($item->id, $branch->id, 4, 'client_order_form', 3);
 
     expect(app(StockAvailabilityService::class)->available($item->id, $branch->id))->toBe(0);
+});
+
+test('reserving stock dispatches StockLevelChanged with the new figures', function () {
+    Event::fake([StockLevelChanged::class]);
+
+    $branch = Branch::factory()->create();
+    $item = Item::factory()->create();
+    Batch::factory()->create(['item_id' => $item->id, 'branch_id' => $branch->id, 'quantity' => 50]);
+
+    app(ReservationService::class)->reserve($item->id, $branch->id, 20, 'client_order_form', 1);
+
+    Event::assertDispatched(StockLevelChanged::class, function (StockLevelChanged $event) use ($item, $branch) {
+        return $event->itemId === $item->id
+            && $event->branchId === $branch->id
+            && $event->available === 30
+            && $event->reserved === 20
+            && $event->current === 50;
+    });
+});
+
+test('reserving stock dispatches LowStockThresholdCrossed only on the transaction that newly crosses it', function () {
+    Event::fake([LowStockThresholdCrossed::class]);
+
+    $branch = Branch::factory()->create();
+    $item = Item::factory()->create(['reorder_point' => 10]);
+    Batch::factory()->create(['item_id' => $item->id, 'branch_id' => $branch->id, 'quantity' => 30]);
+
+    // 30 -> 15 available: still above reorder_point (10), should not fire.
+    app(ReservationService::class)->reserve($item->id, $branch->id, 15, 'client_order_form', 1);
+    Event::assertNotDispatched(LowStockThresholdCrossed::class);
+
+    // 15 -> 8 available: newly crosses at/below reorder_point, should fire once.
+    app(ReservationService::class)->reserve($item->id, $branch->id, 7, 'client_order_form', 2);
+    Event::assertDispatched(LowStockThresholdCrossed::class, function (LowStockThresholdCrossed $event) use ($item, $branch) {
+        return $event->itemId === $item->id
+            && $event->branchId === $branch->id
+            && $event->available === 8
+            && $event->reorderPoint === 10;
+    });
+
+    // 8 -> 5 available: already below reorder_point before this change, must not fire again.
+    Event::fake([LowStockThresholdCrossed::class]);
+    app(ReservationService::class)->reserve($item->id, $branch->id, 3, 'client_order_form', 3);
+    Event::assertNotDispatched(LowStockThresholdCrossed::class);
+});
+
+test('reserving stock for an item with no reorder point never fires LowStockThresholdCrossed', function () {
+    Event::fake([LowStockThresholdCrossed::class]);
+
+    $branch = Branch::factory()->create();
+    $item = Item::factory()->create(['reorder_point' => null]);
+    Batch::factory()->create(['item_id' => $item->id, 'branch_id' => $branch->id, 'quantity' => 10]);
+
+    app(ReservationService::class)->reserve($item->id, $branch->id, 10, 'client_order_form', 1);
+
+    Event::assertNotDispatched(LowStockThresholdCrossed::class);
+});
+
+test('releasing a reservation dispatches StockLevelChanged but never LowStockThresholdCrossed', function () {
+    $branch = Branch::factory()->create();
+    $item = Item::factory()->create(['reorder_point' => 10]);
+    Batch::factory()->create(['item_id' => $item->id, 'branch_id' => $branch->id, 'quantity' => 10]);
+
+    $reservation = app(ReservationService::class)->reserve($item->id, $branch->id, 10, 'client_order_form', 1);
+
+    Event::fake([StockLevelChanged::class, LowStockThresholdCrossed::class]);
+
+    app(ReservationService::class)->release($reservation);
+
+    Event::assertDispatched(StockLevelChanged::class, function (StockLevelChanged $event) use ($item, $branch) {
+        return $event->itemId === $item->id
+            && $event->branchId === $branch->id
+            && $event->available === 10
+            && $event->reserved === 0
+            && $event->current === 10;
+    });
+    Event::assertNotDispatched(LowStockThresholdCrossed::class);
 });
