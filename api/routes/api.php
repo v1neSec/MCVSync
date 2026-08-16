@@ -5,6 +5,12 @@ use App\Http\Controllers\Portal\PasswordResetController as PortalPasswordResetCo
 use App\Http\Controllers\Staff\AuthController as StaffAuthController;
 use App\Http\Controllers\Staff\BranchController;
 use App\Http\Controllers\Staff\EmployeeController;
+use App\Http\Controllers\Staff\Inventory\AlertController;
+use App\Http\Controllers\Staff\Inventory\BatchController;
+use App\Http\Controllers\Staff\Inventory\CategoryController;
+use App\Http\Controllers\Staff\Inventory\ItemController;
+use App\Http\Controllers\Staff\Inventory\StockController;
+use App\Http\Controllers\Staff\Inventory\UnitController;
 use App\Http\Controllers\Staff\PasswordResetController as StaffPasswordResetController;
 use App\Http\Controllers\Staff\PermissionController;
 use App\Http\Controllers\Staff\RoleController;
@@ -39,6 +45,30 @@ Route::prefix('staff')->middleware(['auth:staff', 'ensure-active-account'])->gro
         Route::put('/employees/{employee}/role', [EmployeeController::class, 'assignRole']);
     });
 });
+
+Route::prefix('staff/inventory')
+    ->middleware(['auth:staff', 'ensure-active-account', 'scope-to-branch'])
+    ->group(function () {
+        Route::get('/categories', [CategoryController::class, 'index']);
+        Route::post('/categories', [CategoryController::class, 'store']);
+        Route::patch('/categories/{category}', [CategoryController::class, 'update']);
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+        Route::get('/units', [UnitController::class, 'index']);
+        Route::post('/units', [UnitController::class, 'store']);
+        Route::patch('/units/{unit}', [UnitController::class, 'update']);
+        Route::delete('/units/{unit}', [UnitController::class, 'destroy']);
+
+        Route::get('/items', [ItemController::class, 'index']);
+        Route::post('/items', [ItemController::class, 'store']);
+        Route::patch('/items/{item}', [ItemController::class, 'update']);
+        Route::get('/items/{item}/batches', [BatchController::class, 'index']);
+        Route::get('/items/{item}/stock', [StockController::class, 'show']);
+        Route::get('/items/{item}/transactions', [StockController::class, 'transactions']);
+
+        Route::get('/alerts/expiring', [AlertController::class, 'expiring']);
+        Route::get('/alerts/low-stock', [AlertController::class, 'lowStock']);
+    });
 
 Route::prefix('portal/auth')->group(function () {
     Route::post('/login', [PortalAuthController::class, 'login'])->middleware('throttle:login-client');
