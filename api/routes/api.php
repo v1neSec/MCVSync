@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Portal\AuthController as PortalAuthController;
+use App\Http\Controllers\Portal\CategoryController as PortalCategoryController;
+use App\Http\Controllers\Portal\ItemController as PortalItemController;
 use App\Http\Controllers\Portal\PasswordResetController as PortalPasswordResetController;
 use App\Http\Controllers\Staff\AuthController as StaffAuthController;
 use App\Http\Controllers\Staff\BranchController;
@@ -81,3 +83,10 @@ Route::prefix('portal/auth')->group(function () {
         Route::get('/me', [PortalAuthController::class, 'me']);
     });
 });
+
+Route::prefix('portal')
+    ->middleware(['auth:client', 'ensure-active-account'])
+    ->group(function () {
+        Route::get('/items', [PortalItemController::class, 'index']);
+        Route::get('/categories', [PortalCategoryController::class, 'index']);
+    });
