@@ -20,7 +20,7 @@ class AlertService
      * one). Days-until-expiry is computed with SQLite's julianday(), since
      * that's this project's only supported database driver.
      */
-    public function expiringBatches(?int $branchId): LengthAwarePaginator
+    public function expiringBatches(?int $branchId, int $perPage = 15): LengthAwarePaginator
     {
         $defaultThreshold = config('inventory.default_expiry_alert_threshold_days');
 
@@ -37,7 +37,7 @@ class AlertService
             ->orderBy('batches.expiry_date')
             ->select('batches.*')
             ->with(['item.category', 'item.unit', 'branch'])
-            ->paginate();
+            ->paginate($perPage);
     }
 
     /**
@@ -46,7 +46,7 @@ class AlertService
      * per-item-per-branch sums — never loads batches/reservations into
      * memory to do the arithmetic in PHP.
      */
-    public function lowStockItems(?int $branchId): LengthAwarePaginator
+    public function lowStockItems(?int $branchId, int $perPage = 15): LengthAwarePaginator
     {
         $batchSums = DB::table('batches')
             ->select('item_id', 'branch_id', DB::raw('SUM(quantity) as qty'))
@@ -78,6 +78,6 @@ class AlertService
                 '(COALESCE(batch_sums.qty, 0) - COALESCE(reservation_sums.qty, 0)) as available',
             )
             ->orderByRaw('(COALESCE(batch_sums.qty, 0) - COALESCE(reservation_sums.qty, 0)) ASC')
-            ->paginate();
+            ->paginate($perPage);
     }
 }

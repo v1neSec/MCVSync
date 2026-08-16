@@ -41,6 +41,19 @@ test('purchasing can create and update an item', function () {
     $update->assertJsonPath('reorder_point', 25);
 });
 
+test('purchasing can fetch a single item by id', function () {
+    $user = makeStaffUser();
+    assignStaffRole($user, 'purchasing');
+
+    $item = Item::factory()->create(['name' => 'Surgical Gloves']);
+
+    $response = $this->actingAs($user, 'staff')->getJson("/api/staff/inventory/items/{$item->id}");
+
+    $response->assertOk();
+    $response->assertJsonPath('name', 'Surgical Gloves');
+    $response->assertJsonPath('category.id', $item->category_id);
+});
+
 test('sales has no access to items at all', function () {
     $user = makeStaffUser();
     assignStaffRole($user, 'sales');
@@ -81,4 +94,18 @@ test('items index filters by category, active status, and branch stock presence'
     expect(collect($byBranchStock->json('data'))->pluck('id'))
         ->toContain($inStockAtBranch->id)
         ->not->toContain($notAtBranch->id);
+});
+
+test('items index searches by name or sku', function () {
+    $admin = makeStaffUser();
+    assignStaffRole($admin, 'admin');
+
+    $gloves = Item::factory()->create(['name' => 'Surgical Gloves', 'sku' => 'SKU-GLV-01']);
+    $bandages = Item::factory()->create(['name' => 'Bandages', 'sku' => 'SKU-BND-01']);
+
+    $byName = $this->actingAs($admin, 'staff')->getJson('/api/staff/inventory/items?search=glove');
+    expect(collect($byName->json('data'))->pluck('id'))->toContain($gloves->id)->not->toContain($bandages->id);
+
+    $bySku = $this->actingAs($admin, 'staff')->getJson('/api/staff/inventory/items?search=BND');
+    expect(collect($bySku->json('data'))->pluck('id'))->toContain($bandages->id)->not->toContain($gloves->id);
 });

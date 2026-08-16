@@ -8,20 +8,25 @@ use App\Http\Resources\LowStockItemResource;
 use App\Models\Batch;
 use App\Models\Item;
 use App\Services\AlertService;
+use Illuminate\Http\Request;
 
 class AlertController extends Controller
 {
-    public function expiring(AlertService $alerts)
+    public function expiring(Request $request, AlertService $alerts)
     {
         $this->authorize('viewAny', Batch::class);
 
-        return BatchResource::collection($alerts->expiringBatches($this->currentBranchId()));
+        return BatchResource::collection(
+            $alerts->expiringBatches($this->currentBranchId(), $this->perPage($request)),
+        );
     }
 
-    public function lowStock(AlertService $alerts)
+    public function lowStock(Request $request, AlertService $alerts)
     {
         $this->authorize('viewAny', Item::class);
 
-        return LowStockItemResource::collection($alerts->lowStockItems($this->currentBranchId()));
+        return LowStockItemResource::collection(
+            $alerts->lowStockItems($this->currentBranchId(), $this->perPage($request)),
+        );
     }
 }

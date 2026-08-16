@@ -61,6 +61,7 @@ Route::prefix('staff/inventory')
 
         Route::get('/items', [ItemController::class, 'index']);
         Route::post('/items', [ItemController::class, 'store']);
+        Route::get('/items/{item}', [ItemController::class, 'show']);
         Route::patch('/items/{item}', [ItemController::class, 'update']);
         Route::get('/items/{item}/batches', [BatchController::class, 'index']);
         Route::get('/items/{item}/stock', [StockController::class, 'show']);

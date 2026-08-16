@@ -19,6 +19,10 @@ class ItemController extends Controller
 
         $items = Item::query()
             ->with(['category', 'unit'])
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $search = '%'.$request->string('search').'%';
+                $query->where(fn ($inner) => $inner->where('name', 'like', $search)->orWhere('sku', 'like', $search));
+            })
             ->when($request->filled('category_id'), fn ($query) => $query->where('category_id', $request->integer('category_id')))
             ->when($request->has('is_active'), fn ($query) => $query->where('is_active', $request->boolean('is_active')))
             ->when($request->filled('branch_id'), function ($query) use ($request) {
@@ -32,9 +36,16 @@ class ItemController extends Controller
                 });
             })
             ->orderBy('name')
-            ->paginate();
+            ->paginate($this->perPage($request));
 
         return ItemResource::collection($items);
+    }
+
+    public function show(Item $item)
+    {
+        $this->authorize('view', $item);
+
+        return new ItemResource($item->load(['category', 'unit']));
     }
 
     public function store(StoreItemRequest $request, InventoryService $inventory)
