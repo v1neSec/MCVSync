@@ -1,4 +1,5 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { PortalShell } from "@/components/PortalShell";
 import { meQueryOptions } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -9,5 +10,9 @@ export const Route = createFileRoute("/_authenticated")({
       throw redirect({ to: "/login" });
     }
   },
-  component: () => <Outlet />,
+  component: () => (
+    <PortalShell>
+      <Outlet />
+    </PortalShell>
+  ),
 });
