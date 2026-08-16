@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Events\LowStockThresholdCrossed;
+use App\Events\StockLevelChanged;
 use App\Exceptions\InsufficientStockException;
 use App\Models\Batch;
+use App\Models\Item;
 use App\Models\Scopes\BranchScope;
 use App\Models\StockReservation;
 use Illuminate\Support\Facades\DB;
@@ -49,13 +52,13 @@ class ReservationService
                 ->sum('quantity');
 
             $reservedStock = $this->availability->reservedStock($itemId, $branchId);
-            $available = $currentStock - $reservedStock;
+            $availableBefore = $currentStock - $reservedStock;
 
-            if ($quantity > $available) {
-                throw new InsufficientStockException($itemId, $branchId, $quantity, $available);
+            if ($quantity > $availableBefore) {
+                throw new InsufficientStockException($itemId, $branchId, $quantity, $availableBefore);
             }
 
-            return StockReservation::create([
+            $reservation = StockReservation::create([
                 'item_id' => $itemId,
                 'branch_id' => $branchId,
                 'quantity' => $quantity,
@@ -63,6 +66,18 @@ class ReservationService
                 'reference_id' => $referenceId,
                 'status' => 'active',
             ]);
+
+            $availableAfter = $availableBefore - $quantity;
+
+            StockLevelChanged::dispatch($itemId, $branchId, $availableAfter, $reservedStock + $quantity, $currentStock);
+
+            $reorderPoint = Item::where('id', $itemId)->value('reorder_point');
+
+            if ($reorderPoint !== null && $availableBefore > $reorderPoint && $availableAfter <= $reorderPoint) {
+                LowStockThresholdCrossed::dispatch($itemId, $branchId, $availableAfter, $reorderPoint);
+            }
+
+            return $reservation;
         });
     }
 
@@ -82,6 +97,15 @@ class ReservationService
                 ->firstOrFail();
 
             $reservation->update(['status' => 'released']);
+
+            $itemId = $reservation->item_id;
+            $branchId = $reservation->branch_id;
+            $current = $this->availability->currentStock($itemId, $branchId);
+            $reserved = $this->availability->reservedStock($itemId, $branchId);
+
+            // Releasing only ever increases availability, so it can never
+            // newly cross into low-stock — only reserve() can do that.
+            StockLevelChanged::dispatch($itemId, $branchId, $current - $reserved, $reserved, $current);
         });
     }
 

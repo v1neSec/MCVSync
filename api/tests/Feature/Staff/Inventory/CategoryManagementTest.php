@@ -31,7 +31,7 @@ test('purchasing can list, create, update, and delete categories', function () {
     expect(Category::find($categoryId))->toBeNull();
 });
 
-test('admin can read but not write categories', function () {
+test('admin has full read and write access to categories', function () {
     $admin = makeStaffUser();
     assignStaffRole($admin, 'admin');
 
@@ -39,7 +39,7 @@ test('admin can read but not write categories', function () {
 
     $this->actingAs($admin, 'staff')
         ->postJson('/api/staff/inventory/categories', ['name' => 'Reagents'])
-        ->assertForbidden();
+        ->assertCreated();
 });
 
 test('sales, accounting, and logistics have no access to categories at all', function () {

@@ -24,6 +24,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'has-role' => EnsureHasRole::class,
         ]);
     })
+    ->withBroadcasting(
+        __DIR__.'/../routes/channels.php',
+        // Registered under /api so it inherits the same Sanctum stateful
+        // cookie handling (statefulApi()) as every other endpoint here —
+        // channel subscribers are always the staff-guard session, never
+        // the framework's unused default `web` guard.
+        ['prefix' => 'api', 'middleware' => ['api', 'auth:staff', 'ensure-active-account']],
+    )
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),

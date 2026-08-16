@@ -22,14 +22,18 @@ import { Route as AuthenticatedAccountingPendingPaymentsRouteImport } from './ro
 import { Route as AuthenticatedAccountingPendingPricingRouteImport } from './routes/_authenticated/accounting/pending-pricing'
 import { Route as AuthenticatedAdminActivityLogRouteImport } from './routes/_authenticated/admin/activity-log'
 import { Route as AuthenticatedAdminBranchesRouteImport } from './routes/_authenticated/admin/branches'
-import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
 import { Route as AuthenticatedAdminClientAccountsRouteImport } from './routes/_authenticated/admin/client-accounts'
 import { Route as AuthenticatedAdminClientsRouteImport } from './routes/_authenticated/admin/clients'
 import { Route as AuthenticatedAdminRolePermissionsRouteImport } from './routes/_authenticated/admin/role-permissions'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin/settings'
 import { Route as AuthenticatedAdminStaffRouteImport } from './routes/_authenticated/admin/staff'
 import { Route as AuthenticatedAdminSuppliersRouteImport } from './routes/_authenticated/admin/suppliers'
-import { Route as AuthenticatedAdminUnitsRouteImport } from './routes/_authenticated/admin/units'
+import { Route as AuthenticatedInventoryExpiringRouteImport } from './routes/_authenticated/inventory/expiring'
+import { Route as AuthenticatedInventoryLowStockRouteImport } from './routes/_authenticated/inventory/low-stock'
+import { Route as AuthenticatedItemsIndexRouteImport } from './routes/_authenticated/items/index'
+import { Route as AuthenticatedItemsCategoriesRouteImport } from './routes/_authenticated/items/categories'
+import { Route as AuthenticatedItemsNewRouteImport } from './routes/_authenticated/items/new'
+import { Route as AuthenticatedItemsUnitsRouteImport } from './routes/_authenticated/items/units'
 import { Route as AuthenticatedLogisticsDeliveryHistoryRouteImport } from './routes/_authenticated/logistics/delivery-history'
 import { Route as AuthenticatedLogisticsIncomingOrdersRouteImport } from './routes/_authenticated/logistics/incoming-orders'
 import { Route as AuthenticatedLogisticsReadyToDeliverRouteImport } from './routes/_authenticated/logistics/ready-to-deliver'
@@ -52,6 +56,8 @@ import { Route as AuthenticatedSuperAdminCompareBranchesRouteImport } from './ro
 import { Route as AuthenticatedSuperAdminPurchasesOverviewRouteImport } from './routes/_authenticated/super-admin/purchases-overview'
 import { Route as AuthenticatedSuperAdminRoleAssignmentRouteImport } from './routes/_authenticated/super-admin/role-assignment'
 import { Route as AuthenticatedSuperAdminSalesOverviewRouteImport } from './routes/_authenticated/super-admin/sales-overview'
+import { Route as AuthenticatedItemsItemIdIndexRouteImport } from './routes/_authenticated/items/$itemId/index'
+import { Route as AuthenticatedItemsItemIdEditRouteImport } from './routes/_authenticated/items/$itemId/edit'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -125,12 +131,6 @@ const AuthenticatedAdminBranchesRoute =
     path: '/admin/branches',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedAdminCategoriesRoute =
-  AuthenticatedAdminCategoriesRouteImport.update({
-    id: '/admin/categories',
-    path: '/admin/categories',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
 const AuthenticatedAdminClientAccountsRoute =
   AuthenticatedAdminClientAccountsRouteImport.update({
     id: '/admin/client-accounts',
@@ -166,9 +166,37 @@ const AuthenticatedAdminSuppliersRoute =
     path: '/admin/suppliers',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
-const AuthenticatedAdminUnitsRoute = AuthenticatedAdminUnitsRouteImport.update({
-  id: '/admin/units',
-  path: '/admin/units',
+const AuthenticatedInventoryExpiringRoute =
+  AuthenticatedInventoryExpiringRouteImport.update({
+    id: '/inventory/expiring',
+    path: '/inventory/expiring',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedInventoryLowStockRoute =
+  AuthenticatedInventoryLowStockRouteImport.update({
+    id: '/inventory/low-stock',
+    path: '/inventory/low-stock',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedItemsIndexRoute = AuthenticatedItemsIndexRouteImport.update({
+  id: '/items/',
+  path: '/items/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedItemsCategoriesRoute =
+  AuthenticatedItemsCategoriesRouteImport.update({
+    id: '/items/categories',
+    path: '/items/categories',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedItemsNewRoute = AuthenticatedItemsNewRouteImport.update({
+  id: '/items/new',
+  path: '/items/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedItemsUnitsRoute = AuthenticatedItemsUnitsRouteImport.update({
+  id: '/items/units',
+  path: '/items/units',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedLogisticsDeliveryHistoryRoute =
@@ -301,6 +329,18 @@ const AuthenticatedSuperAdminSalesOverviewRoute =
     path: '/super-admin/sales-overview',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedItemsItemIdIndexRoute =
+  AuthenticatedItemsItemIdIndexRouteImport.update({
+    id: '/items/$itemId/',
+    path: '/items/$itemId/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedItemsItemIdEditRoute =
+  AuthenticatedItemsItemIdEditRouteImport.update({
+    id: '/items/$itemId/edit',
+    path: '/items/$itemId/edit',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -315,14 +355,17 @@ export interface FileRoutesByFullPath {
   '/accounting/pending-pricing': typeof AuthenticatedAccountingPendingPricingRoute
   '/admin/activity-log': typeof AuthenticatedAdminActivityLogRoute
   '/admin/branches': typeof AuthenticatedAdminBranchesRoute
-  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/client-accounts': typeof AuthenticatedAdminClientAccountsRoute
   '/admin/clients': typeof AuthenticatedAdminClientsRoute
   '/admin/role-permissions': typeof AuthenticatedAdminRolePermissionsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/staff': typeof AuthenticatedAdminStaffRoute
   '/admin/suppliers': typeof AuthenticatedAdminSuppliersRoute
-  '/admin/units': typeof AuthenticatedAdminUnitsRoute
+  '/inventory/expiring': typeof AuthenticatedInventoryExpiringRoute
+  '/inventory/low-stock': typeof AuthenticatedInventoryLowStockRoute
+  '/items/categories': typeof AuthenticatedItemsCategoriesRoute
+  '/items/new': typeof AuthenticatedItemsNewRoute
+  '/items/units': typeof AuthenticatedItemsUnitsRoute
   '/logistics/delivery-history': typeof AuthenticatedLogisticsDeliveryHistoryRoute
   '/logistics/incoming-orders': typeof AuthenticatedLogisticsIncomingOrdersRoute
   '/logistics/ready-to-deliver': typeof AuthenticatedLogisticsReadyToDeliverRoute
@@ -345,6 +388,9 @@ export interface FileRoutesByFullPath {
   '/super-admin/purchases-overview': typeof AuthenticatedSuperAdminPurchasesOverviewRoute
   '/super-admin/role-assignment': typeof AuthenticatedSuperAdminRoleAssignmentRoute
   '/super-admin/sales-overview': typeof AuthenticatedSuperAdminSalesOverviewRoute
+  '/items/': typeof AuthenticatedItemsIndexRoute
+  '/items/$itemId/edit': typeof AuthenticatedItemsItemIdEditRoute
+  '/items/$itemId/': typeof AuthenticatedItemsItemIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
@@ -359,14 +405,17 @@ export interface FileRoutesByTo {
   '/accounting/pending-pricing': typeof AuthenticatedAccountingPendingPricingRoute
   '/admin/activity-log': typeof AuthenticatedAdminActivityLogRoute
   '/admin/branches': typeof AuthenticatedAdminBranchesRoute
-  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/client-accounts': typeof AuthenticatedAdminClientAccountsRoute
   '/admin/clients': typeof AuthenticatedAdminClientsRoute
   '/admin/role-permissions': typeof AuthenticatedAdminRolePermissionsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/staff': typeof AuthenticatedAdminStaffRoute
   '/admin/suppliers': typeof AuthenticatedAdminSuppliersRoute
-  '/admin/units': typeof AuthenticatedAdminUnitsRoute
+  '/inventory/expiring': typeof AuthenticatedInventoryExpiringRoute
+  '/inventory/low-stock': typeof AuthenticatedInventoryLowStockRoute
+  '/items/categories': typeof AuthenticatedItemsCategoriesRoute
+  '/items/new': typeof AuthenticatedItemsNewRoute
+  '/items/units': typeof AuthenticatedItemsUnitsRoute
   '/logistics/delivery-history': typeof AuthenticatedLogisticsDeliveryHistoryRoute
   '/logistics/incoming-orders': typeof AuthenticatedLogisticsIncomingOrdersRoute
   '/logistics/ready-to-deliver': typeof AuthenticatedLogisticsReadyToDeliverRoute
@@ -389,6 +438,9 @@ export interface FileRoutesByTo {
   '/super-admin/purchases-overview': typeof AuthenticatedSuperAdminPurchasesOverviewRoute
   '/super-admin/role-assignment': typeof AuthenticatedSuperAdminRoleAssignmentRoute
   '/super-admin/sales-overview': typeof AuthenticatedSuperAdminSalesOverviewRoute
+  '/items': typeof AuthenticatedItemsIndexRoute
+  '/items/$itemId/edit': typeof AuthenticatedItemsItemIdEditRoute
+  '/items/$itemId': typeof AuthenticatedItemsItemIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -405,14 +457,17 @@ export interface FileRoutesById {
   '/_authenticated/accounting/pending-pricing': typeof AuthenticatedAccountingPendingPricingRoute
   '/_authenticated/admin/activity-log': typeof AuthenticatedAdminActivityLogRoute
   '/_authenticated/admin/branches': typeof AuthenticatedAdminBranchesRoute
-  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/client-accounts': typeof AuthenticatedAdminClientAccountsRoute
   '/_authenticated/admin/clients': typeof AuthenticatedAdminClientsRoute
   '/_authenticated/admin/role-permissions': typeof AuthenticatedAdminRolePermissionsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/staff': typeof AuthenticatedAdminStaffRoute
   '/_authenticated/admin/suppliers': typeof AuthenticatedAdminSuppliersRoute
-  '/_authenticated/admin/units': typeof AuthenticatedAdminUnitsRoute
+  '/_authenticated/inventory/expiring': typeof AuthenticatedInventoryExpiringRoute
+  '/_authenticated/inventory/low-stock': typeof AuthenticatedInventoryLowStockRoute
+  '/_authenticated/items/categories': typeof AuthenticatedItemsCategoriesRoute
+  '/_authenticated/items/new': typeof AuthenticatedItemsNewRoute
+  '/_authenticated/items/units': typeof AuthenticatedItemsUnitsRoute
   '/_authenticated/logistics/delivery-history': typeof AuthenticatedLogisticsDeliveryHistoryRoute
   '/_authenticated/logistics/incoming-orders': typeof AuthenticatedLogisticsIncomingOrdersRoute
   '/_authenticated/logistics/ready-to-deliver': typeof AuthenticatedLogisticsReadyToDeliverRoute
@@ -435,6 +490,9 @@ export interface FileRoutesById {
   '/_authenticated/super-admin/purchases-overview': typeof AuthenticatedSuperAdminPurchasesOverviewRoute
   '/_authenticated/super-admin/role-assignment': typeof AuthenticatedSuperAdminRoleAssignmentRoute
   '/_authenticated/super-admin/sales-overview': typeof AuthenticatedSuperAdminSalesOverviewRoute
+  '/_authenticated/items/': typeof AuthenticatedItemsIndexRoute
+  '/_authenticated/items/$itemId/edit': typeof AuthenticatedItemsItemIdEditRoute
+  '/_authenticated/items/$itemId/': typeof AuthenticatedItemsItemIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -451,14 +509,17 @@ export interface FileRouteTypes {
     | '/accounting/pending-pricing'
     | '/admin/activity-log'
     | '/admin/branches'
-    | '/admin/categories'
     | '/admin/client-accounts'
     | '/admin/clients'
     | '/admin/role-permissions'
     | '/admin/settings'
     | '/admin/staff'
     | '/admin/suppliers'
-    | '/admin/units'
+    | '/inventory/expiring'
+    | '/inventory/low-stock'
+    | '/items/categories'
+    | '/items/new'
+    | '/items/units'
     | '/logistics/delivery-history'
     | '/logistics/incoming-orders'
     | '/logistics/ready-to-deliver'
@@ -481,6 +542,9 @@ export interface FileRouteTypes {
     | '/super-admin/purchases-overview'
     | '/super-admin/role-assignment'
     | '/super-admin/sales-overview'
+    | '/items/'
+    | '/items/$itemId/edit'
+    | '/items/$itemId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -495,14 +559,17 @@ export interface FileRouteTypes {
     | '/accounting/pending-pricing'
     | '/admin/activity-log'
     | '/admin/branches'
-    | '/admin/categories'
     | '/admin/client-accounts'
     | '/admin/clients'
     | '/admin/role-permissions'
     | '/admin/settings'
     | '/admin/staff'
     | '/admin/suppliers'
-    | '/admin/units'
+    | '/inventory/expiring'
+    | '/inventory/low-stock'
+    | '/items/categories'
+    | '/items/new'
+    | '/items/units'
     | '/logistics/delivery-history'
     | '/logistics/incoming-orders'
     | '/logistics/ready-to-deliver'
@@ -525,6 +592,9 @@ export interface FileRouteTypes {
     | '/super-admin/purchases-overview'
     | '/super-admin/role-assignment'
     | '/super-admin/sales-overview'
+    | '/items'
+    | '/items/$itemId/edit'
+    | '/items/$itemId'
   id:
     | '__root__'
     | '/_authenticated'
@@ -540,14 +610,17 @@ export interface FileRouteTypes {
     | '/_authenticated/accounting/pending-pricing'
     | '/_authenticated/admin/activity-log'
     | '/_authenticated/admin/branches'
-    | '/_authenticated/admin/categories'
     | '/_authenticated/admin/client-accounts'
     | '/_authenticated/admin/clients'
     | '/_authenticated/admin/role-permissions'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/staff'
     | '/_authenticated/admin/suppliers'
-    | '/_authenticated/admin/units'
+    | '/_authenticated/inventory/expiring'
+    | '/_authenticated/inventory/low-stock'
+    | '/_authenticated/items/categories'
+    | '/_authenticated/items/new'
+    | '/_authenticated/items/units'
     | '/_authenticated/logistics/delivery-history'
     | '/_authenticated/logistics/incoming-orders'
     | '/_authenticated/logistics/ready-to-deliver'
@@ -570,6 +643,9 @@ export interface FileRouteTypes {
     | '/_authenticated/super-admin/purchases-overview'
     | '/_authenticated/super-admin/role-assignment'
     | '/_authenticated/super-admin/sales-overview'
+    | '/_authenticated/items/'
+    | '/_authenticated/items/$itemId/edit'
+    | '/_authenticated/items/$itemId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -672,13 +748,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBranchesRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/admin/categories': {
-      id: '/_authenticated/admin/categories'
-      path: '/admin/categories'
-      fullPath: '/admin/categories'
-      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
-      parentRoute: typeof AuthenticatedRoute
-    }
     '/_authenticated/admin/client-accounts': {
       id: '/_authenticated/admin/client-accounts'
       path: '/admin/client-accounts'
@@ -721,11 +790,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSuppliersRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/_authenticated/admin/units': {
-      id: '/_authenticated/admin/units'
-      path: '/admin/units'
-      fullPath: '/admin/units'
-      preLoaderRoute: typeof AuthenticatedAdminUnitsRouteImport
+    '/_authenticated/inventory/expiring': {
+      id: '/_authenticated/inventory/expiring'
+      path: '/inventory/expiring'
+      fullPath: '/inventory/expiring'
+      preLoaderRoute: typeof AuthenticatedInventoryExpiringRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/inventory/low-stock': {
+      id: '/_authenticated/inventory/low-stock'
+      path: '/inventory/low-stock'
+      fullPath: '/inventory/low-stock'
+      preLoaderRoute: typeof AuthenticatedInventoryLowStockRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/items/': {
+      id: '/_authenticated/items/'
+      path: '/items'
+      fullPath: '/items/'
+      preLoaderRoute: typeof AuthenticatedItemsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/items/categories': {
+      id: '/_authenticated/items/categories'
+      path: '/items/categories'
+      fullPath: '/items/categories'
+      preLoaderRoute: typeof AuthenticatedItemsCategoriesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/items/new': {
+      id: '/_authenticated/items/new'
+      path: '/items/new'
+      fullPath: '/items/new'
+      preLoaderRoute: typeof AuthenticatedItemsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/items/units': {
+      id: '/_authenticated/items/units'
+      path: '/items/units'
+      fullPath: '/items/units'
+      preLoaderRoute: typeof AuthenticatedItemsUnitsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/logistics/delivery-history': {
@@ -882,6 +986,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSuperAdminSalesOverviewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/items/$itemId/': {
+      id: '/_authenticated/items/$itemId/'
+      path: '/items/$itemId'
+      fullPath: '/items/$itemId/'
+      preLoaderRoute: typeof AuthenticatedItemsItemIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/items/$itemId/edit': {
+      id: '/_authenticated/items/$itemId/edit'
+      path: '/items/$itemId/edit'
+      fullPath: '/items/$itemId/edit'
+      preLoaderRoute: typeof AuthenticatedItemsItemIdEditRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
@@ -895,14 +1013,17 @@ interface AuthenticatedRouteChildren {
   AuthenticatedAccountingPendingPricingRoute: typeof AuthenticatedAccountingPendingPricingRoute
   AuthenticatedAdminActivityLogRoute: typeof AuthenticatedAdminActivityLogRoute
   AuthenticatedAdminBranchesRoute: typeof AuthenticatedAdminBranchesRoute
-  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
   AuthenticatedAdminClientAccountsRoute: typeof AuthenticatedAdminClientAccountsRoute
   AuthenticatedAdminClientsRoute: typeof AuthenticatedAdminClientsRoute
   AuthenticatedAdminRolePermissionsRoute: typeof AuthenticatedAdminRolePermissionsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminStaffRoute: typeof AuthenticatedAdminStaffRoute
   AuthenticatedAdminSuppliersRoute: typeof AuthenticatedAdminSuppliersRoute
-  AuthenticatedAdminUnitsRoute: typeof AuthenticatedAdminUnitsRoute
+  AuthenticatedInventoryExpiringRoute: typeof AuthenticatedInventoryExpiringRoute
+  AuthenticatedInventoryLowStockRoute: typeof AuthenticatedInventoryLowStockRoute
+  AuthenticatedItemsCategoriesRoute: typeof AuthenticatedItemsCategoriesRoute
+  AuthenticatedItemsNewRoute: typeof AuthenticatedItemsNewRoute
+  AuthenticatedItemsUnitsRoute: typeof AuthenticatedItemsUnitsRoute
   AuthenticatedLogisticsDeliveryHistoryRoute: typeof AuthenticatedLogisticsDeliveryHistoryRoute
   AuthenticatedLogisticsIncomingOrdersRoute: typeof AuthenticatedLogisticsIncomingOrdersRoute
   AuthenticatedLogisticsReadyToDeliverRoute: typeof AuthenticatedLogisticsReadyToDeliverRoute
@@ -925,6 +1046,9 @@ interface AuthenticatedRouteChildren {
   AuthenticatedSuperAdminPurchasesOverviewRoute: typeof AuthenticatedSuperAdminPurchasesOverviewRoute
   AuthenticatedSuperAdminRoleAssignmentRoute: typeof AuthenticatedSuperAdminRoleAssignmentRoute
   AuthenticatedSuperAdminSalesOverviewRoute: typeof AuthenticatedSuperAdminSalesOverviewRoute
+  AuthenticatedItemsIndexRoute: typeof AuthenticatedItemsIndexRoute
+  AuthenticatedItemsItemIdEditRoute: typeof AuthenticatedItemsItemIdEditRoute
+  AuthenticatedItemsItemIdIndexRoute: typeof AuthenticatedItemsItemIdIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -941,7 +1065,6 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedAccountingPendingPricingRoute,
   AuthenticatedAdminActivityLogRoute: AuthenticatedAdminActivityLogRoute,
   AuthenticatedAdminBranchesRoute: AuthenticatedAdminBranchesRoute,
-  AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminClientAccountsRoute: AuthenticatedAdminClientAccountsRoute,
   AuthenticatedAdminClientsRoute: AuthenticatedAdminClientsRoute,
   AuthenticatedAdminRolePermissionsRoute:
@@ -949,7 +1072,11 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminStaffRoute: AuthenticatedAdminStaffRoute,
   AuthenticatedAdminSuppliersRoute: AuthenticatedAdminSuppliersRoute,
-  AuthenticatedAdminUnitsRoute: AuthenticatedAdminUnitsRoute,
+  AuthenticatedInventoryExpiringRoute: AuthenticatedInventoryExpiringRoute,
+  AuthenticatedInventoryLowStockRoute: AuthenticatedInventoryLowStockRoute,
+  AuthenticatedItemsCategoriesRoute: AuthenticatedItemsCategoriesRoute,
+  AuthenticatedItemsNewRoute: AuthenticatedItemsNewRoute,
+  AuthenticatedItemsUnitsRoute: AuthenticatedItemsUnitsRoute,
   AuthenticatedLogisticsDeliveryHistoryRoute:
     AuthenticatedLogisticsDeliveryHistoryRoute,
   AuthenticatedLogisticsIncomingOrdersRoute:
@@ -984,6 +1111,9 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
     AuthenticatedSuperAdminRoleAssignmentRoute,
   AuthenticatedSuperAdminSalesOverviewRoute:
     AuthenticatedSuperAdminSalesOverviewRoute,
+  AuthenticatedItemsIndexRoute: AuthenticatedItemsIndexRoute,
+  AuthenticatedItemsItemIdEditRoute: AuthenticatedItemsItemIdEditRoute,
+  AuthenticatedItemsItemIdIndexRoute: AuthenticatedItemsItemIdIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

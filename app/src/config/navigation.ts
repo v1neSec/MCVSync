@@ -1,7 +1,6 @@
 import {
   Activity,
   Banknote,
-  Boxes,
   Building2,
   ChartNoAxesCombined,
   ClipboardList,
@@ -24,6 +23,7 @@ import {
   ShieldCheck,
   ShoppingCart,
   Tags,
+  TriangleAlert,
   Truck,
   Users,
   Warehouse,
@@ -38,6 +38,24 @@ export interface NavItem {
   badgeKey?: string;
   children?: NavItem[];
 }
+
+const ITEMS_NAV_GROUP: NavItem = {
+  key: "items",
+  label: "Items",
+  icon: Package,
+  children: [
+    { key: "items-all", label: "All Items", icon: Package, to: "/items" },
+    { key: "items-categories", label: "Categories", icon: Tags, to: "/items/categories" },
+    { key: "items-units", label: "Units of Measure", icon: Ruler, to: "/items/units" },
+    {
+      key: "items-expiring",
+      label: "Near-Expiry Items",
+      icon: Clock3,
+      to: "/inventory/expiring",
+    },
+    { key: "items-low-stock", label: "Low Stock", icon: TriangleAlert, to: "/inventory/low-stock" },
+  ],
+};
 
 export const NAVIGATION: Record<Role, NavItem[]> = {
   super_admin: [
@@ -95,6 +113,7 @@ export const NAVIGATION: Record<Role, NavItem[]> = {
         },
       ],
     },
+    ITEMS_NAV_GROUP,
     {
       key: "sales-overview",
       label: "Sales Overview",
@@ -126,16 +145,8 @@ export const NAVIGATION: Record<Role, NavItem[]> = {
         },
       ],
     },
-    {
-      key: "catalog",
-      label: "Catalog",
-      icon: Boxes,
-      children: [
-        { key: "categories", label: "Categories", icon: Tags, to: "/admin/categories" },
-        { key: "units", label: "Units of Measure", icon: Ruler, to: "/admin/units" },
-        { key: "catalog-branches", label: "Branches", icon: Building2, to: "/admin/branches" },
-      ],
-    },
+    ITEMS_NAV_GROUP,
+    { key: "branches", label: "Branches", icon: Building2, to: "/admin/branches" },
     { key: "suppliers", label: "Suppliers", icon: Truck, to: "/admin/suppliers" },
     {
       key: "clients",
@@ -279,6 +290,7 @@ export const NAVIGATION: Record<Role, NavItem[]> = {
 
   purchasing: [
     { key: "home", label: "Home", icon: Home, to: "/" },
+    ITEMS_NAV_GROUP,
     {
       key: "purchase-orders",
       label: "Purchase Orders",

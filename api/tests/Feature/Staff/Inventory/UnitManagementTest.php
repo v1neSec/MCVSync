@@ -26,7 +26,7 @@ test('purchasing can list, create, update, and delete units', function () {
         ->assertNoContent();
 });
 
-test('super admin can write units and admin cannot', function () {
+test('super admin and admin can both write units', function () {
     $superAdmin = makeStaffUser();
     assignStaffRole($superAdmin, 'super_admin');
 
@@ -39,7 +39,7 @@ test('super admin can write units and admin cannot', function () {
 
     $this->actingAs($admin, 'staff')
         ->postJson('/api/staff/inventory/units', ['code' => 'box', 'name' => 'Box'])
-        ->assertForbidden();
+        ->assertCreated();
 });
 
 test('deleting a unit still assigned to an item is rejected', function () {
